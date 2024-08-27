@@ -16,4 +16,4 @@ MonoBehaviour:
   _gridWidth: 100
   _gridHeight: 100
   _cellWidth: 1
-  _cellHeight: 1
+  _cellHeight: 2

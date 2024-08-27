@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined;
         transform.position = new Vector3(GridManager.Instance.MapCollider.size.x / 2, GridManager.Instance.MapCollider.size.y / 2, transform.position.z);
         _newPosition = transform.position;
     }

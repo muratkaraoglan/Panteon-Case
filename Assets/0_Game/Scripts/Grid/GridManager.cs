@@ -24,4 +24,35 @@ public class GridManager : Singleton<GridManager>
     public BoxCollider2D MapCollider => _mapCollider;
 
     public NodeBase GetTileAtPosition(Vector3 pos) => Tiles.TryGetValue(pos, out var tile) ? tile : null;
+
+    public bool IsPointsValidToPlace(List<Transform> points)
+    {
+        int validPointCount = 0;
+        for (int i = 0; i < points.Count; i++)
+        {
+            var point = points[i].position;
+            point.x = (int)point.x;
+            point.y = (int)point.y;
+            point.z = 0;
+            var node = GetTileAtPosition(point);
+            if (node == null) continue;
+            if (!node.IsEmpty) continue;
+            validPointCount++;
+        }
+        return validPointCount == points.Count;
+    }
+
+    public void FillEmptyPoints(List<Transform> points)
+    {
+        for (int i = 0;i < points.Count;i++)
+        {
+            var point = points[i].position;
+            point.x = (int)point.x;
+            point.y = (int)point.y;
+            point.z = 0;
+            var node = GetTileAtPosition(point);
+            node.IsEmpty = false;
+        }
+    }
+
 }

@@ -10,11 +10,12 @@ public class ScriptableSquareGrid : ScriptableGrid
         var tiles = new Dictionary<Vector3, NodeBase>();
         var grid = new GameObject { name = "Grid" };
 
-        for (int x = 0; x < _gridWidth; x += _cellWidth)
+        for (int x = 0; x < _gridWidth; x++)
         {
-            for (int y = 0; y < _gridWidth; y += _cellHeight)
+            for (int y = 0; y < _gridWidth; y++)
             {
                 var tile = Instantiate(_nodePrefab, grid.transform);
+                tile.name = "Square (" + x + "," + y + ")";
                 Vector3 pos = new Vector3(x, y, 0);
                 tile.Init(true, new SquareCoords { Position = pos });
                 tiles.Add(pos, tile);
