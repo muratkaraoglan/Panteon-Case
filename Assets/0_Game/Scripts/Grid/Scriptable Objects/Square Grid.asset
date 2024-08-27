@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93cb1c05665335243893e34fd73a9c06, type: 3}
+  m_Name: Square Grid
+  m_EditorClassIdentifier: 
+  _nodePrefab: {fileID: 2384709765660305410, guid: c7b0cf26cf6c0db40b83a9c983d92e93, type: 3}
+  _gridWidth: 100
+  _gridHeight: 100
+  _cellWidth: 1
+  _cellHeight: 1

@@ -7,7 +7,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private float _normalSpeed;
     [SerializeField] private float _movementTime;
-    [SerializeField] private BoxCollider2D _mapCollider;
 
     private Vector3 _newPosition;
 
@@ -18,6 +17,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        transform.position = new Vector3(GridManager.Instance.MapCollider.size.x / 2, GridManager.Instance.MapCollider.size.y / 2, transform.position.z);
         _newPosition = transform.position;
     }
 
@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
     {
         var verticalExtent = _mainCamera.orthographicSize;// calculates the vertical extent (half-height) of what the camera can see in world units
         var horizontalExtent = verticalExtent * Screen.width / Screen.height; //calculates the horizontal extent (half-width) of the camera's view by multiplying the vertical extent by the aspect ratio
-        var areaBounds = _mapCollider.bounds;
+        var areaBounds = GridManager.Instance.MapCollider.bounds;
 
         _newPosition = new Vector3(
             Mathf.Clamp(_newPosition.x, areaBounds.min.x + horizontalExtent, areaBounds.max.x - horizontalExtent),
