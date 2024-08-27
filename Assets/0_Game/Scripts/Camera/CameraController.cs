@@ -1,0 +1,73 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    [SerializeField] private Camera _mainCamera;
+    [SerializeField] private float _normalSpeed;
+    [SerializeField] private float _movementTime;
+    [SerializeField] private BoxCollider2D _mapCollider;
+
+    private Vector3 _newPosition;
+
+    #region Mouse
+    private Vector3 _dragStartPosition;
+    private Vector3 _dragCurrentPosition;
+    #endregion
+
+    private void Start()
+    {
+        _newPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        HandleMouseInput();
+    }
+
+    private void LateUpdate()
+    {
+        var verticalExtent = _mainCamera.orthographicSize;// calculates the vertical extent (half-height) of what the camera can see in world units
+        var horizontalExtent = verticalExtent * Screen.width / Screen.height; //calculates the horizontal extent (half-width) of the camera's view by multiplying the vertical extent by the aspect ratio
+        var areaBounds = _mapCollider.bounds;
+
+        _newPosition = new Vector3(
+            Mathf.Clamp(_newPosition.x, areaBounds.min.x + horizontalExtent, areaBounds.max.x - horizontalExtent),
+            Mathf.Clamp(_newPosition.y, areaBounds.min.y + verticalExtent, areaBounds.max.y - verticalExtent),
+            _newPosition.z
+            );
+        transform.position = Vector3.Lerp(transform.position, _newPosition, _movementTime * Time.deltaTime);
+    }
+
+    private void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Plane plane = new Plane(Vector3.forward, Vector3.zero);
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            float entry;
+            if (plane.Raycast(ray, out entry))
+            {
+                _dragStartPosition = ray.GetPoint(entry);
+            }
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            Plane plane = new Plane(Vector3.forward, Vector3.zero);
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            float entry;
+            if (plane.Raycast(ray, out entry))
+            {
+                _dragCurrentPosition = ray.GetPoint(entry);
+
+                _newPosition = transform.position + _dragStartPosition - _dragCurrentPosition;
+            }
+        }
+    }
+}
