@@ -34,10 +34,10 @@ public class Test : MonoBehaviour
     //    color.a = .5f;
     //    backgroundSprite.color = color;
     //}
-
-    public UnitBaseSO UnitBaseSO;
+    public int index;
+    public FactoryBase Factory;
     public void Create()
     {
-        UnitBaseSO.Create();
+        Factory.ProvideUnit(Factory.GetUnitBase(index));
     }
 }

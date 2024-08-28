@@ -32,6 +32,13 @@ public class MapItemPlacementHelper : Singleton<MapItemPlacementHelper>
         {
             Placable.Place();
             Placable = null;
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            Placable.GetPlacableObject().SetDisable();
+            Placable = null;
         }
     }
 
@@ -43,4 +50,5 @@ public interface IPlacable
     public void ChangeAreaBackgroundColor(Color color);
     public bool IsValidPlacement();
     public void Place();
+    public GameObject GetPlacableObject();
 }

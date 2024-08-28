@@ -42,9 +42,13 @@ public class GridManager : Singleton<GridManager>
         return validPointCount == points.Count;
     }
 
+    /// <summary>
+    /// Changing the state of the points occupied by the object placed on the map to full
+    /// </summary>
+    /// <param name="points"></param>
     public void FillEmptyPoints(List<Transform> points)
     {
-        for (int i = 0;i < points.Count;i++)
+        for (int i = 0; i < points.Count; i++)
         {
             var point = points[i].position;
             point.x = (int)point.x;
@@ -52,6 +56,22 @@ public class GridManager : Singleton<GridManager>
             point.z = 0;
             var node = GetTileAtPosition(point);
             node.IsEmpty = false;
+        }
+    }
+    /// <summary>
+    /// Changing the status of points destroyed from the map or occupied by the moved object to empty
+    /// </summary>
+    /// <param name="points"></param>
+    public void EmptyFilledPoints(List<Transform> points)
+    {
+        for (int i = 0; i < points.Count; i++)
+        {
+            var point = points[i].position;
+            point.x = (int)point.x;
+            point.y = (int)point.y;
+            point.z = 0;
+            var node = GetTileAtPosition(point);
+            node.IsEmpty = true;
         }
     }
 
