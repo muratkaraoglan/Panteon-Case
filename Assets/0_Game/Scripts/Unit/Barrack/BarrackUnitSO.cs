@@ -4,7 +4,7 @@
 public class BarrackUnitSO : BuildingUnitSO
 {
     [SerializeField] private BarrackUnit _barrackUnit;
-    [SerializeField] private ArmyFactory _armyFactory;
+    [SerializeField] private SoldierFactory _armyFactory;
     public override GameObject Create()
     {
         BarrackUnit unit = Instantiate(_barrackUnit);

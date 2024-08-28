@@ -2,9 +2,9 @@
 
 public class BarrackUnit : Unit, IPlacable
 {
-    private ArmyFactory _armyFactory;
+    private SoldierFactory _armyFactory;
 
-    public void SetArmyFactory(ArmyFactory armyFactory) => _armyFactory = armyFactory;
+    public void SetArmyFactory(SoldierFactory armyFactory) => _armyFactory = armyFactory;
     public void ChangeAreaBackgroundColor(Color color)
     {
         _backgroundSpriteRenderer.color = color;
@@ -27,6 +27,9 @@ public class BarrackUnit : Unit, IPlacable
 
     public void Place()
     {
+        _backgroundSpriteRenderer.enabled = false;
+        _isPlaced = true;
         GridManager.Instance.FillEmptyPoints(_tilePoints);
     }
+    
 }

@@ -24,6 +24,8 @@ public class PowerPlantUnit : Unit, IPlacable
 
     public void Place()
     {
+        _backgroundSpriteRenderer.enabled = false;
+        _isPlaced = true;
         GridManager.Instance.FillEmptyPoints(_tilePoints);
     }
 }

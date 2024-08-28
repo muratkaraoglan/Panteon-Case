@@ -8,6 +8,8 @@ public class BuildingFactory : FactoryBase
 {
     [SerializeField] private List<BuildingUnitSO> _buildingUnits;
 
+    public override int FactoryUnitCount => _buildingUnits.Count;
+
     public override UnitBaseSO GetUnitBase(int index)
     {
         return _buildingUnits[index];
@@ -34,4 +36,6 @@ public class BuildingFactory : FactoryBase
         product.SetEnable();
         MapItemPlacementHelper.Instance.Placable = product.GetComponent<IPlacable>();
     }
+
+
 }

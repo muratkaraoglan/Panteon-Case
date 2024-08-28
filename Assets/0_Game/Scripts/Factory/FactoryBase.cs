@@ -10,5 +10,6 @@ public abstract class FactoryBase : ScriptableObject
     public abstract void ProvideUnit(UnitBaseSO unit, GameObject selectedObject = null);
 
     public abstract UnitBaseSO GetUnitBase(int index);
+    public abstract int FactoryUnitCount { get; }
 }
 

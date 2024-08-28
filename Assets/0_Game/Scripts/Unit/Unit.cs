@@ -12,6 +12,13 @@ public abstract class Unit : MonoBehaviour
     protected Sprite _sprite;
     protected Vector2 _dimension;
     protected List<Transform> _tilePoints;
+    protected bool _isPlaced;
+
+    private void OnEnable()
+    {
+        _backgroundSpriteRenderer.enabled = true;
+        _isPlaced = false;
+    }
 
     public virtual void Init(string name, Sprite sprite, Vector2 dimension, int maxHP)
     {

@@ -2,12 +2,15 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Soldier Factory", menuName = "Factory/Soldier Factory")]
-public class ArmyFactory : FactoryBase
+public class SoldierFactory : FactoryBase
 {
-    [SerializeField] private List<ArmyUnitSO> soldierUnits;
+    [SerializeField] private List<SoldierUnitSO> _soldierUnits;
+
+    public override int FactoryUnitCount => _soldierUnits.Count;
+
     public override UnitBaseSO GetUnitBase(int index)
     {
-        return soldierUnits[index];
+        return _soldierUnits[index];
     }
 
     public override void ProvideUnit(UnitBaseSO unit, GameObject selectedGameObject = null)

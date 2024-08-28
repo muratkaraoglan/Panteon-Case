@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bf26ec7f39eed4aa2f3e00365cd8af, type: 3}
   m_Name: PowerPlant
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
+  <Name>k__BackingField: Power Plant
   <Sprite>k__BackingField: {fileID: 21300000, guid: 357e6f244450c754fbf5b130e445049f, type: 3}
   <Dimension>k__BackingField: {x: 2, y: 3}
   <HP>k__BackingField: 50
