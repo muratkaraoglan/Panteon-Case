@@ -13,6 +13,7 @@ public class GridManager : Singleton<GridManager>
     {
         base.Awake();
         Tiles = _scriptableGrid.GenerateGrid();
+        foreach (var tile in Tiles.Values) tile.CacheNeighbors();
         GameObject map = Instantiate(_mapPrefab);
         SpriteRenderer mapSprite = map.GetComponent<SpriteRenderer>();
         mapSprite.size = new Vector2(_scriptableGrid.Width, _scriptableGrid.Height);

@@ -5,9 +5,14 @@ using UnityEngine;
 public class SoldierUnitSO : ArmyUnitSO
 {
     [SerializeField] private SoldierUnit _soldierUnitPrefab;
+    [SerializeField] private int _soldierDamage;
     public override GameObject Create()
     {
-        return null;
+        SoldierUnit unit = Instantiate(_soldierUnitPrefab);
+        unit.Init(Name, Sprite, Dimension, HP);
+        unit.SetBarrackUnit(MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject.GetComponent<BarrackUnit>());
+        unit.SetDamage(_soldierDamage);
+        return unit.gameObject;
     }
 
     public override string Info()

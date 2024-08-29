@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract class NodeBase : MonoBehaviour
 {
@@ -18,10 +19,27 @@ public abstract class NodeBase : MonoBehaviour
 
     public float GetDistance(NodeBase otherNode) => Coords.GetDistance(otherNode.Coords);
 
+    public bool IsAreaEmpty(int width, int height)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                
+                NodeBase node = GridManager.Instance.GetTileAtPosition(new Vector3((int)Coords.Position.x + x, (int)Coords.Position.y + y, 0));
+                if (node == null || !node.IsEmpty)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     #region Pathfinding
     public List<NodeBase> Neighbors { get; protected set; }
     public NodeBase Connection { get; private set; }
-    public float G {  get; private set; }
+    public float G { get; private set; }
     public float H { get; private set; }
     public float F => G + H;
 
@@ -32,8 +50,8 @@ public abstract class NodeBase : MonoBehaviour
         Connection = nodeBase;
     }
 
-    public void SetG(float g)=>G = g;
-    public void SetH(float h)=> H = h;
+    public void SetG(float g) => G = g;
+    public void SetH(float h) => H = h;
 
     #endregion
 }

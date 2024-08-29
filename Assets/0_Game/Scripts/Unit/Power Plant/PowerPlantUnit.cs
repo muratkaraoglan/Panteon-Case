@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using UnityEditor;
+
 public class PowerPlantUnit : Unit, IPlacable, IPointerDownHandler
 {
+    InfoPanelData _headerData;
     public void ChangeAreaBackgroundColor(Color color)
     {
         _backgroundSpriteRenderer.color = color;
@@ -28,6 +31,13 @@ public class PowerPlantUnit : Unit, IPlacable, IPointerDownHandler
         _backgroundSpriteRenderer.enabled = false;
         _isPlaced = true;
         GridManager.Instance.FillEmptyPoints(_tilePoints);
+
+        _headerData.UnitSprite = _sprite;
+        _headerData.UnitInfo = _name;
+
+        MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
+        _onProductionMenuChangedEvent.RaiseEvent(null);
+        _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData> { _headerData });
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -36,13 +46,8 @@ public class PowerPlantUnit : Unit, IPlacable, IPointerDownHandler
         if (eventData.button != 0) return;//left button click
 
         MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
-     
-        InfoPanelData headerData;
-        headerData.UnitSprite = _sprite;
-        headerData.UnitInfo = _name;
-
         _onProductionMenuChangedEvent.RaiseEvent(null);
-        _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData> { headerData });
+        _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData> { _headerData });
     }
 
 }

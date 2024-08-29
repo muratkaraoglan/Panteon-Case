@@ -32,10 +32,17 @@ public abstract class Unit : MonoBehaviour
         _sprite = sprite;
         _dimension = dimension;
         gameObject.name = _name;
+
         _bodySpriteRenderer.sprite = _sprite;
         _bodySpriteRenderer.transform.localPosition = new Vector3(_dimension.x / 2, dimension.y / 2, 0f);
+        Vector3 bodyScale = _bodySpriteRenderer.transform.localScale;
+        bodyScale.x*=dimension.x;
+        bodyScale.y*=dimension.y;
+        _bodySpriteRenderer.transform.localScale = bodyScale;
+
         _backgroundSpriteRenderer.transform.localPosition = new Vector3(_dimension.x / 2, dimension.y / 2, 0f);
         _backgroundSpriteRenderer.transform.localScale = new Vector3(_dimension.x, _dimension.y, 1);
+
         _health.Init(maxHP);
 
         for (int x = 0; x < _dimension.x; x++)

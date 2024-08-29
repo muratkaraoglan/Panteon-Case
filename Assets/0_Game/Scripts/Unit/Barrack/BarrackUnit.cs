@@ -47,6 +47,10 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
         _backgroundSpriteRenderer.enabled = false;
         _isPlaced = true;
         GridManager.Instance.FillEmptyPoints(_tilePoints);
+
+        MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
+        _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);
+        _onInformationMenuChangedEvent.RaiseEvent(_infoPanelDataList);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -55,8 +59,9 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
         if (eventData.button != 0) return;//left button click
 
         MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
-
-        _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);     
+        _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);
         _onInformationMenuChangedEvent.RaiseEvent(_infoPanelDataList);
     }
+
+    public Vector3 Dimension => _dimension;
 }
