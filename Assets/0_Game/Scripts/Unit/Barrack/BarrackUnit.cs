@@ -4,6 +4,22 @@ using System.Collections.Generic;
 public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
 {
     private SoldierFactory _armyFactory;
+    private List<InfoPanelData> _infoPanelDataList;
+    private void Start()
+    {
+        InfoPanelData headerData;
+        headerData.UnitSprite = _sprite;
+        headerData.UnitInfo = _name;
+        _infoPanelDataList = new List<InfoPanelData>() { headerData };
+
+        for (int i = 0; i < _armyFactory.FactoryUnitCount; i++)
+        {
+            InfoPanelData data;
+            data.UnitSprite = _armyFactory.GetUnitBase(i).Sprite;
+            data.UnitInfo = _armyFactory.GetUnitBase(i).Info();
+            _infoPanelDataList.Add(data);
+        }
+    }
 
     public void SetArmyFactory(SoldierFactory armyFactory) => _armyFactory = armyFactory;
     public void ChangeAreaBackgroundColor(Color color)
@@ -36,10 +52,11 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!_isPlaced) return;
+        if (eventData.button != 0) return;//left button click
 
-        InfoPanelData headerData;
-        headerData.UnitSprite = _sprite;
-        headerData.UnitInfo = _name;
-        _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData> { headerData });
+        MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
+
+        _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);     
+        _onInformationMenuChangedEvent.RaiseEvent(_infoPanelDataList);
     }
 }

@@ -15,6 +15,11 @@ public class SoldierFactory : FactoryBase
 
     public override void ProvideUnit(UnitBaseSO unit, GameObject selectedGameObject = null)
     {
+        //GameObject product;
 
+        //if (_pool.ContainsKey(unit.Name))
+        //{
+ 
+        //}
     }
 }

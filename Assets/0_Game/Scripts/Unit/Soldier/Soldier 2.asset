@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fe51df8229d82247a15aa5a97d51887, type: 3}
-  m_Name: Soldier 1
+  m_Name: Soldier 2
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Soldier1
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 461b0a254a4780545870e2acc861be7f, type: 3}
+  <Name>k__BackingField: Soldier2
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 3dc0a306651d3ce44a794fb45b916a1b, type: 3}
   <Dimension>k__BackingField: {x: 1, y: 1}
-  <HP>k__BackingField: 15
+  <HP>k__BackingField: 10
   _soldierUnitPrefab: {fileID: 2624858802632166958, guid: fea9c6ef65bf7ac459b2bfae0c37d3f7, type: 3}

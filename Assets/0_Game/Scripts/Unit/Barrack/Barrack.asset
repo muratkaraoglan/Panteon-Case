@@ -17,4 +17,4 @@ MonoBehaviour:
   <Dimension>k__BackingField: {x: 4, y: 4}
   <HP>k__BackingField: 100
   _barrackUnit: {fileID: 2327363301197270704, guid: ed0ffb5bdc95be146b04010a967f6a02, type: 3}
-  _armyFactory: {fileID: 0}
+  _armyFactory: {fileID: 11400000, guid: bcccf2a2a4e1736468bb6f1712224d0c, type: 2}

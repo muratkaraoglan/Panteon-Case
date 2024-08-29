@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Unit/Building/Barrack", fileName = "Barrack")]
 public class BarrackUnitSO : BuildingUnitSO
@@ -11,5 +12,13 @@ public class BarrackUnitSO : BuildingUnitSO
         unit.Init(Name, Sprite, Dimension, HP);
         unit.SetArmyFactory(_armyFactory);
         return unit.gameObject;
+    }
+
+    public override string Info()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append("Name: ").AppendLine(Name);
+        stringBuilder.Append("Dimension: ").Append(Dimension.x).Append("x").Append(Dimension.y);
+        return stringBuilder.ToString();
     }
 }

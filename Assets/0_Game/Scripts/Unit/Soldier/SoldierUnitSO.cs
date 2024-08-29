@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Unit/Army/Soldier", fileName = "Soldier")]
 public class SoldierUnitSO : ArmyUnitSO
@@ -7,5 +8,13 @@ public class SoldierUnitSO : ArmyUnitSO
     public override GameObject Create()
     {
         return null;
+    }
+
+    public override string Info()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.Append("Name: ").AppendLine(Name);
+        stringBuilder.Append("Dimension: ").Append(Dimension.x).Append("x").Append(Dimension.y);
+        return stringBuilder.ToString();
     }
 }

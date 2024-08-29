@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public abstract class UnitBaseSO : ScriptableObject
@@ -10,6 +11,9 @@ public abstract class UnitBaseSO : ScriptableObject
     [field: SerializeField] public int HP { get; protected set; }
 
     public abstract GameObject Create();
+
+    public abstract string Info();
+ 
 
 }
 

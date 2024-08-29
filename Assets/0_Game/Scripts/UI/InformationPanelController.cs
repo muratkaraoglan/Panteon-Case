@@ -50,23 +50,38 @@ public class InformationPanelController : MonoBehaviour
         }
         else
         {
-            bool _isPanelFullOpen = Mathf.Approximately(_myRectTransform.anchoredPosition.x, 0f);
             InfoPanelData unitData = infoPanelDataList[0];// first data always be header(unit) data
-            infoPanelDataList.RemoveAt(0);
             _unitImage.sprite = unitData.UnitSprite;
             _unitNameText.text = unitData.UnitInfo;
 
-            int difference = _infoProductionUnitPool.Count - infoPanelDataList.Count;
+            int dataCount = infoPanelDataList.Count;
+            dataCount--;
 
-            if (difference < 0)
+            if (dataCount > 0)//if unit has production data
             {
-                difference *= -1;
-                for (int i = 0; i < difference; i++)
+                int difference = _infoProductionUnitPool.Count - dataCount;// calculate pool difference
+
+                if (difference < 0)
                 {
-                    Instantiate(_infoProductionUnitPrefab, _infoProductionUnitParent);
+                    difference *= -1;
+
+                    for (int i = 0; i < difference; i++)
+                    {
+                        InfoProductionUnitController infoPUC = Instantiate(_infoProductionUnitPrefab, _infoProductionUnitParent);
+                        _infoProductionUnitPool.Add(infoPUC);
+                    }
+                }
+
+                for (int i = 1; i < infoPanelDataList.Count; i++)
+                {
+                    InfoProductionUnitController infoPUC = _infoProductionUnitPool[i - 1];
+                    infoPUC.InfoProductionImage.sprite = infoPanelDataList[i].UnitSprite;
+                    infoPUC.InfoText.text = infoPanelDataList[i].UnitInfo;
+                    infoPUC.gameObject.SetEnable();
                 }
             }
 
+            bool _isPanelFullOpen = Mathf.Approximately(_myRectTransform.anchoredPosition.x, 0f);
             if (!_isPanelFullOpen)
             {
                 if (_movementCoroutine != null)
@@ -85,9 +100,9 @@ public class InformationPanelController : MonoBehaviour
         Vector2 targetPos = new Vector2(targetX, currentPos.y);
 
         //Calculation of the time remaining for closing or opening
-        float movementPerStep = _panelMovementAnimationTime / 300;
+        float movementSpeedPerStep = _panelMovementAnimationTime / Mathf.Abs(_panelClosingTargetX);
         float movementDiff = Mathf.Abs(targetX - currentPos.x);
-        float animationTime = movementDiff * movementPerStep;
+        float animationTime = movementDiff * movementSpeedPerStep;
 
         while (elapsedTime < animationTime)
         {

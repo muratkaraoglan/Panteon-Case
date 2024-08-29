@@ -31,13 +31,18 @@ public class PowerPlantUnit : Unit, IPlacable, IPointerDownHandler
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {
+    {     
         if (!_isPlaced) return;
-        _onProductionMenuChangedEvent.RaiseEvent(null);
+        if (eventData.button != 0) return;//left button click
 
+        MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
+     
         InfoPanelData headerData;
         headerData.UnitSprite = _sprite;
         headerData.UnitInfo = _name;
+
+        _onProductionMenuChangedEvent.RaiseEvent(null);
         _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData> { headerData });
     }
+
 }

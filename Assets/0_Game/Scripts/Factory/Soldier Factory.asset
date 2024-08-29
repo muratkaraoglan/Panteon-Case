@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aab08ae046c5574f8c8564f3a8f3ebb, type: 3}
   m_Name: Soldier Factory
   m_EditorClassIdentifier: 
-  soldierUnits:
-  - {fileID: 0}
+  _soldierUnits:
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
