@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-
-public class BarrackUnit : Unit, IPlacable
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
+public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
 {
     private SoldierFactory _armyFactory;
 
@@ -31,5 +32,14 @@ public class BarrackUnit : Unit, IPlacable
         _isPlaced = true;
         GridManager.Instance.FillEmptyPoints(_tilePoints);
     }
-    
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!_isPlaced) return;
+
+        InfoPanelData headerData;
+        headerData.UnitSprite = _sprite;
+        headerData.UnitInfo = _name;
+        _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData> { headerData });
+    }
 }

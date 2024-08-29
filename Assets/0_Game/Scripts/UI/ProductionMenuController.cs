@@ -18,13 +18,9 @@ public class ProductionMenuController : MonoBehaviour
         for (int i = 0; i < _defaultFactory.FactoryUnitCount; i++)
         {
             GameObject button = Instantiate(_produictionButtonPrefab, _productionButtonParent);
-            UnitBaseSO unitBaseSo = _defaultFactory.GetUnitBase(i);
-            button.GetComponent<Image>().sprite = unitBaseSo.Sprite;
-            button.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                _defaultFactory.ProvideUnit(unitBaseSo);
-            });
+            EnableButton(button, _defaultFactory, i);
             _productionButtonPool.Add(button);
+
         }
     }
 
@@ -37,6 +33,40 @@ public class ProductionMenuController : MonoBehaviour
             button.SetDisable();
         }
     }
+    private void EnableButton(GameObject button, FactoryBase factoryBase, int index)
+    {
+        UnitBaseSO unitBaseSo = factoryBase.GetUnitBase(index);
+        button.GetComponent<Image>().sprite = unitBaseSo.Sprite;
+        button.GetComponent<Button>().onClick.AddListener(() =>
+        {
+            factoryBase.ProvideUnit(unitBaseSo);
+        });
+        button.SetEnable();
+    }
 
+    public void ChangeMenu(FactoryBase newFactory)
+    {
+        ClearButtonListeners();
+
+        FactoryBase factoryBase = newFactory == null ? _defaultFactory : newFactory;
+
+        int difference = _productionButtonPool.Count - factoryBase.FactoryUnitCount;
+
+        if (difference < 0)
+        {
+            difference *= -1;
+            for (int i = 0; i < difference; i++)
+            {
+                GameObject button = Instantiate(_produictionButtonPrefab, _productionButtonParent);
+                _productionButtonPool.Add(button);
+            }
+        }
+
+        for (int i = 0; i < factoryBase.FactoryUnitCount; i++)
+        {
+            GameObject button = _productionButtonPool[i];
+            EnableButton(button, factoryBase, i);
+        }
+    }
 
 }

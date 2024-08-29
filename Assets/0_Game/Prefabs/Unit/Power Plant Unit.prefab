@@ -52,6 +52,8 @@ MonoBehaviour:
   _backgroundSpriteRenderer: {fileID: 2879916971612680079}
   _tilePointsParent: {fileID: 2879916971312999225}
   _health: {fileID: 422661545207988879}
+  _onProductionMenuChangedEvent: {fileID: 11400000, guid: 45f7e36fd84ad81439296865ab3e89b9, type: 2}
+  _onInformationMenuChangedEvent: {fileID: 11400000, guid: a6c07cb66bec55d4692665599a7bbde6, type: 2}
 --- !u!114 &422661545207988879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,8 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2879916971612680076}
   - component: {fileID: 2879916971612680079}
-  - component: {fileID: 6269229676173729434}
-  - component: {fileID: 4243514302769117161}
+  - component: {fileID: 2757540386393484716}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -181,7 +182,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6269229676173729434
+--- !u!61 &2757540386393484716
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,35 +208,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4243514302769117161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2879916971612680077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2879916971232079596}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &2879916972757659562
 GameObject:
   m_ObjectHideFlags: 0

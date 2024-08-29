@@ -8,6 +8,11 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected SpriteRenderer _backgroundSpriteRenderer;
     [SerializeField] protected Transform _tilePointsParent;
     [SerializeField] private Health _health;
+
+    [Header("Event")]
+    [SerializeField] protected OnProductionMenuChangedEvent _onProductionMenuChangedEvent;
+    [SerializeField] protected OnInformationMenuChangedEvent _onInformationMenuChangedEvent;
+
     protected string _name;
     protected Sprite _sprite;
     protected Vector2 _dimension;
