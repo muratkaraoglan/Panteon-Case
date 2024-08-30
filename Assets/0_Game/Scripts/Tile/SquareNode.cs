@@ -40,6 +40,6 @@ public struct SquareCoords : ICoord
 
         var horizontalMovesRequired = highest - lowest;
 
-        return lowest * 14 + horizontalMovesRequired * 10;
+        return lowest * NodeBase.MOVE_DIAGONAL_COST + horizontalMovesRequired * NodeBase.MOVE_STRAIGHT_COST;
     }
 }

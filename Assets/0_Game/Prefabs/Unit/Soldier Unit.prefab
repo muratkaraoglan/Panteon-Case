@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 2624858802632166958}
   - component: {fileID: 2624858802632166961}
   - component: {fileID: 5145586908100431454}
+  - component: {fileID: 1722555740912912309}
+  - component: {fileID: 7990806419007637433}
   m_Layer: 0
   m_Name: Soldier Unit
   m_TagString: Untagged
@@ -111,7 +113,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementTimePerTile: 0.1
-  path: []
+--- !u!114 &1722555740912912309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452403375280857682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201aedbad15df9e4cb84b3123090a363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7990806419007637433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452403375280857682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aaa2bc783b7a734a818c015bcc53c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &452403375866258227
 GameObject:
   m_ObjectHideFlags: 0

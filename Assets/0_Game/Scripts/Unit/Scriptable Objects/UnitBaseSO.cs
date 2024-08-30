@@ -14,9 +14,4 @@ public abstract class UnitBaseSO : ScriptableObject
 
     public abstract string Info();
  
-
 }
-
-public abstract class BuildingUnitSO : UnitBaseSO { }
-
-public abstract class ArmyUnitSO : UnitBaseSO { }

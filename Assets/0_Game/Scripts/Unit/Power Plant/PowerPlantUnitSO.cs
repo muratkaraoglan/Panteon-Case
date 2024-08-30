@@ -18,6 +18,7 @@ public class PowerPlantUnitSO : BuildingUnitSO
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append("Name: ").AppendLine(Name);
         stringBuilder.Append("Dimension: ").Append(Dimension.x).Append("x").Append(Dimension.y);
+        stringBuilder.Append("Max HP: ").AppendLine(HP.ToString());
         return stringBuilder.ToString();
     }
 }

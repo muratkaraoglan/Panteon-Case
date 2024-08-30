@@ -12,7 +12,7 @@ public class MapItemPlacementHelper : Singleton<MapItemPlacementHelper>
 
         Plane plane = new Plane(Vector3.forward, Vector3.zero);
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = CameraController.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
 
         float entry;
         if (plane.Raycast(ray, out entry))

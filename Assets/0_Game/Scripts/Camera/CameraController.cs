@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : Singleton<CameraController>
 {
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private float _normalSpeed;
@@ -47,7 +47,7 @@ public class CameraController : MonoBehaviour
         {
             Plane plane = new Plane(Vector3.forward, Vector3.zero);
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
             float entry;
             if (plane.Raycast(ray, out entry))
@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
         {
             Plane plane = new Plane(Vector3.forward, Vector3.zero);
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
             float entry;
             if (plane.Raycast(ray, out entry))
@@ -71,4 +71,6 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+
+    public Camera MainCamera => _mainCamera;
 }

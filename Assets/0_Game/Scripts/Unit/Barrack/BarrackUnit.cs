@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
-public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
+public class BarrackUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
 {
     private SoldierFactory _armyFactory;
     private List<InfoPanelData> _infoPanelDataList;
+
+    public int UnitID => _unitID;
+
     private void Start()
     {
         InfoPanelData headerData;

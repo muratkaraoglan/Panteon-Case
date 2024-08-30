@@ -33,8 +33,10 @@ public class BuildingFactory : FactoryBase
             product = unit.Create();
             _pool.Add(unit.Name, new List<GameObject> { product });
         }
+        product.GetComponent<Unit>().SetUnitID(UnitIDProvider.ProvideID);
         product.SetEnable();
         MapItemPlacementHelper.Instance.Placable = product.GetComponent<IPlacable>();
+
     }
 
 

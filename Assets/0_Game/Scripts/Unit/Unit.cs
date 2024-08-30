@@ -18,7 +18,7 @@ public abstract class Unit : MonoBehaviour
     protected Vector2 _dimension;
     protected List<Transform> _tilePoints;
     protected bool _isPlaced;
-
+    protected int _unitID;
     private void OnEnable()
     {
         _backgroundSpriteRenderer.enabled = true;
@@ -45,7 +45,7 @@ public abstract class Unit : MonoBehaviour
 
         _health.Init(maxHP);
 
-        for (int x = 0; x < _dimension.x; x++)
+        for (int x = 0; x < _dimension.x; x++)//Create tile points depends on area dimension
         {
             for (int y = 0; y < _dimension.y; y++)
             {
@@ -63,15 +63,10 @@ public abstract class Unit : MonoBehaviour
 
     public Vector2 Dimension => _dimension;
     public List<Transform> AreaTilePoints => _tilePoints;
-
+    public void SetUnitID(int unitID) => _unitID = unitID;
     private void OnDisable()
     {
         GridManager.Instance.EmptyFilledPoints(_tilePoints);
     }
 
-}
-
-public interface IAttack
-{
-    public void Attack();
 }

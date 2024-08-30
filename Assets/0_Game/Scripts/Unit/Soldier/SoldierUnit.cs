@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class SoldierUnit : Unit, IAttack, IPointerDownHandler
+public class SoldierUnit : Unit, IPointerDownHandler, ITargetable
 {
-    private BarrackUnit _barrackUnit;
     private int _damage;
+    private int _attackRange;
     InfoPanelData _headerData;
-    public void Attack()
-    {
 
-    }
-    public void SetBarrackUnit(BarrackUnit barrackUnit) => _barrackUnit = barrackUnit;
+    public int UnitID => _unitID;
+    public int AttackRange => _attackRange;
     public void SetDamage(int damage)
     {
         _damage = damage;
+    }
+    public void SetAttackRange(int attackRange)
+    {
+        _attackRange = attackRange;
     }
 
     public void OnPlace()

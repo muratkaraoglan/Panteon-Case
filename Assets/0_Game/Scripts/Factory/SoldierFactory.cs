@@ -5,7 +5,9 @@ using UnityEngine;
 public class SoldierFactory : FactoryBase
 {
     [SerializeField] private List<SoldierUnitSO> _soldierUnits;
-
+    [SerializeField, Tooltip("How many turns around the production unit must be scanned to place the produced unit?")
+        , Min(1)]
+    private int _scanDeep;
     public override int FactoryUnitCount => _soldierUnits.Count;
 
     public override UnitBaseSO GetUnitBase(int index)
@@ -23,7 +25,7 @@ public class SoldierFactory : FactoryBase
 
         Vector3 productionUnitDimension = selectedGameObject.GetComponent<BarrackUnit>().Dimension;
 
-        NodeBase nodeBase = Pathfinding.FindTileToSpawn(pos, (int)productionUnitDimension.x, (int)productionUnitDimension.y, (int)unit.Dimension.x, (int)unit.Dimension.y);
+        NodeBase nodeBase = Pathfinding.FindTileToSpawn(pos, (int)productionUnitDimension.x, (int)productionUnitDimension.y, (int)unit.Dimension.x, (int)unit.Dimension.y, _scanDeep);
 
         if (nodeBase != null)
         {
@@ -43,7 +45,12 @@ public class SoldierFactory : FactoryBase
             }
             product.transform.position = nodeBase.Coords.Position;
             product.SetEnable();
-            product.GetComponent<SoldierUnit>().OnPlace();
+            SoldierUnit soldier = product.GetComponent<SoldierUnit>();
+            soldier.OnPlace();
+            if (selectedGameObject.TryGetComponent(out ITargetable targatable))
+            {
+                soldier.SetUnitID(targatable.UnitID);
+            }
         }
     }
 }
