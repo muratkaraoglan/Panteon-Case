@@ -14,5 +14,6 @@ public class Ground : MonoBehaviour, IPointerDownHandler
         if (eventData.button != 0) return;//left button click
         _onProductionMenuChangedEvent.RaiseEvent(_factory);
         _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData>());
+        MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
     }
 }

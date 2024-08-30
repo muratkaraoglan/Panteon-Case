@@ -6,9 +6,9 @@ public class SquareNode : NodeBase
 {
     private static readonly List<Vector3> Dirs = new List<Vector3>
     {
-        new Vector3(0,0,1),//forward
+        new Vector3(0,1,0),//forward
         new Vector3(-1,0,0),//left
-        new Vector3(0,0,-1),//back
+        new Vector3(0,-1,0),//back
         new Vector3(1,0,0)//right
     };
 
@@ -40,6 +40,6 @@ public struct SquareCoords : ICoord
 
         var horizontalMovesRequired = highest - lowest;
 
-        return lowest * NodeBase.MOVE_DIAGONAL_COST + horizontalMovesRequired * NodeBase.MOVE_STRAIGHT_COST;
+        return lowest * 14 + horizontalMovesRequired * 10;
     }
 }

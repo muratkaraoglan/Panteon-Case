@@ -39,7 +39,7 @@ public static class Pathfinding
                 return path;
             }
 
-            foreach (var neighbor in current.Neighbors.Where(t => !t.IsEmpty && !processed.Contains(t)))
+            foreach (var neighbor in current.Neighbors.Where(t => t.IsEmpty && !processed.Contains(t)))
             {
                 var inSearch = toSearch.Contains(neighbor);
 
@@ -61,48 +61,6 @@ public static class Pathfinding
         return null;
     }
 
-    public static NodeBase FindClosestEmptyArea(NodeBase startNode, int requiredWidth, int requiredHeight)
-    {
-        var toSearch = new List<NodeBase>() { startNode };
-        var processed = new List<NodeBase>();
-
-        while (toSearch.Any())
-        {
-            var current = toSearch[0];
-            foreach (var t in toSearch)
-                if (t.F < current.F || (t.F == current.F && t.H < current.H)) current = t;
-
-            processed.Add(current);
-            toSearch.Remove(current);
-
-
-            if (current.IsAreaEmpty(requiredWidth, requiredHeight))
-            {
-                return current;
-            }
-
-
-            foreach (var neighbor in current.Neighbors.Where(t => !processed.Contains(t)))
-            {
-                var inSearch = toSearch.Contains(neighbor);
-                var costToNeighbor = current.G + current.GetDistance(neighbor);
-
-                if (!inSearch || costToNeighbor < neighbor.G)
-                {
-                    neighbor.SetG(costToNeighbor);
-                    neighbor.SetConnection(current);
-
-                    if (!inSearch)
-                    {
-                        neighbor.SetH(neighbor.GetDistance(startNode));
-                        toSearch.Add(neighbor);
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
     /// <summary>
     /// Searches for empty space clockwise starting from the bottom left corner of unit
     /// </summary>

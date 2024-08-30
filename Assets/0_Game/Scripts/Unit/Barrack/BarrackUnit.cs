@@ -62,6 +62,4 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler
         _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);
         _onInformationMenuChangedEvent.RaiseEvent(_infoPanelDataList);
     }
-
-    public Vector3 Dimension => _dimension;
 }

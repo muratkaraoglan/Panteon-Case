@@ -25,7 +25,7 @@ public abstract class NodeBase : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                
+
                 NodeBase node = GridManager.Instance.GetTileAtPosition(new Vector3((int)Coords.Position.x + x, (int)Coords.Position.y + y, 0));
                 if (node == null || !node.IsEmpty)
                 {

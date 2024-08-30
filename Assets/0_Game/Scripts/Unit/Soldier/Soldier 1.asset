@@ -15,5 +15,6 @@ MonoBehaviour:
   <Name>k__BackingField: Soldier1
   <Sprite>k__BackingField: {fileID: 21300000, guid: 461b0a254a4780545870e2acc861be7f, type: 3}
   <Dimension>k__BackingField: {x: 1, y: 1}
-  <HP>k__BackingField: 15
+  <HP>k__BackingField: 10
   _soldierUnitPrefab: {fileID: 2624858802632166958, guid: fea9c6ef65bf7ac459b2bfae0c37d3f7, type: 3}
+  _soldierDamage: 10

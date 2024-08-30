@@ -36,8 +36,8 @@ public abstract class Unit : MonoBehaviour
         _bodySpriteRenderer.sprite = _sprite;
         _bodySpriteRenderer.transform.localPosition = new Vector3(_dimension.x / 2, dimension.y / 2, 0f);
         Vector3 bodyScale = _bodySpriteRenderer.transform.localScale;
-        bodyScale.x*=dimension.x;
-        bodyScale.y*=dimension.y;
+        bodyScale.x *= dimension.x;
+        bodyScale.y *= dimension.y;
         _bodySpriteRenderer.transform.localScale = bodyScale;
 
         _backgroundSpriteRenderer.transform.localPosition = new Vector3(_dimension.x / 2, dimension.y / 2, 0f);
@@ -61,6 +61,8 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
+    public Vector2 Dimension => _dimension;
+    public List<Transform> AreaTilePoints => _tilePoints;
 
     private void OnDisable()
     {
