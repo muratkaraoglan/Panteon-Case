@@ -20,6 +20,10 @@ public class GridManager : Singleton<GridManager>
         _mapCollider = map.GetComponent<BoxCollider2D>();
         _mapCollider.size = new Vector2(_scriptableGrid.Width, _scriptableGrid.Height);
         _mapCollider.offset = new Vector2(_scriptableGrid.Width / 2, _scriptableGrid.Height / 2);
+
+        Vector3 mapPosition = map.transform.position;//I changed its position in the forward direction because sometimes it detects the map when it should be detecting units while casting a ray.
+        mapPosition.z++;
+        map.transform.position= mapPosition;
     }
 
     public BoxCollider2D MapCollider => _mapCollider;

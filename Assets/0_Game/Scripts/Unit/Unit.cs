@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
@@ -8,7 +9,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected SpriteRenderer _backgroundSpriteRenderer;
     [SerializeField] protected Transform _tilePointsParent;
     [SerializeField] private Health _health;
-
+    [SerializeField] private TextMeshProUGUI _iDText;
     [Header("Event")]
     [SerializeField] protected OnProductionMenuChangedEvent _onProductionMenuChangedEvent;
     [SerializeField] protected OnInformationMenuChangedEvent _onInformationMenuChangedEvent;
@@ -18,7 +19,7 @@ public abstract class Unit : MonoBehaviour
     protected Vector2 _dimension;
     protected List<Transform> _tilePoints;
     protected bool _isPlaced;
-    protected int _unitID;
+    [SerializeField] protected int _unitID;
     private void OnEnable()
     {
         _backgroundSpriteRenderer.enabled = true;
@@ -63,7 +64,11 @@ public abstract class Unit : MonoBehaviour
 
     public Vector2 Dimension => _dimension;
     public List<Transform> AreaTilePoints => _tilePoints;
-    public void SetUnitID(int unitID) => _unitID = unitID;
+    public void SetUnitID(int unitID)
+    {
+        _unitID = unitID;
+        _iDText.SetText(_unitID.ToString());
+    }
     private void OnDisable()
     {
         GridManager.Instance.EmptyFilledPoints(_tilePoints);
