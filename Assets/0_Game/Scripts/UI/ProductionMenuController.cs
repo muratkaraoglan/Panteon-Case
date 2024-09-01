@@ -64,6 +64,7 @@ public class ProductionMenuController : MonoBehaviour
             }
             return;
         }
+
         FactoryBase factoryBase = newFactory;
 
         int difference = _productionButtonPool.Count - factoryBase.FactoryUnitCount;

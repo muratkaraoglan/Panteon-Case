@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IPointerDownHandler
 {
+
+    [Header("Event")]
+    [SerializeField] private OnUnitHealthChangeEvent _healthChangeEvent;
+
     private int _maxHP;
     private int _currentHP;
     public void Init(int maxHP)
@@ -14,4 +19,44 @@ public class Health : MonoBehaviour
     {
         _currentHP = _maxHP;
     }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button == 0)
+        {
+            _healthChangeEvent?.RaiseEvent(new HealthChangeEventData
+            {
+                CurrentHealth = _currentHP,
+                MaxHealth = _maxHP
+            });
+
+        }
+    }
+
+    [ContextMenu("Change")]
+    public void Change()
+    {
+        TakeDamage(10);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _currentHP -= 10;
+
+
+        if (MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject == gameObject)
+        {
+            _healthChangeEvent?.RaiseEvent(new HealthChangeEventData
+            {
+                CurrentHealth = _currentHP,
+                MaxHealth = _maxHP
+            });
+        }
+        if (_currentHP <= 0)
+        {
+            gameObject.SetDisable();
+        }
+    }
+
+
 }

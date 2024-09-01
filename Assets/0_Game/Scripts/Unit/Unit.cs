@@ -72,6 +72,12 @@ public abstract class Unit : MonoBehaviour
     private void OnDisable()
     {
         GridManager.Instance.EmptyFilledPoints(_tilePoints);
+        if (MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject != gameObject) return;
+
+        MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = null;
+        _onProductionMenuChangedEvent.RaiseEvent(null);
+        _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData>());
+ 
     }
 
 }
