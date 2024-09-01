@@ -14,7 +14,7 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
     {
         InfoPanelData headerData;
         headerData.UnitSprite = _sprite;
-        headerData.UnitInfo = _name;
+        headerData.UnitInfo = _info;
         _infoPanelDataList = new List<InfoPanelData>() { headerData };
 
         for (int i = 0; i < _armyFactory.FactoryUnitCount; i++)

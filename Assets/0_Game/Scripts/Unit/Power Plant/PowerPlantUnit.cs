@@ -38,7 +38,7 @@ public class PowerPlantUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
         GridManager.Instance.FillEmptyPoints(_tilePoints, transform);
 
         _headerData.UnitSprite = _sprite;
-        _headerData.UnitInfo = _name;
+        _headerData.UnitInfo = _info;
 
         MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
         _onProductionMenuChangedEvent.RaiseEvent(null);

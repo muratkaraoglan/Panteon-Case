@@ -21,19 +21,20 @@ public abstract class Unit : MonoBehaviour
     protected List<Transform> _tilePoints;
     protected bool _isPlaced;
     protected int _unitID;
-
+    protected string _info;
     private void OnEnable()
     {
         _backgroundSpriteRenderer.enabled = true;
         _isPlaced = false;
     }
 
-    public virtual void Init(string name, Sprite sprite, Vector2 dimension, int maxHP)
+    public virtual void Init(string name, Sprite sprite, Vector2 dimension, int maxHP,string info)
     {
         _tilePoints = new List<Transform>();
         _name = name;
         _sprite = sprite;
         _dimension = dimension;
+        _info = info;
         gameObject.name = _name;
 
         _bodySpriteRenderer.sprite = _sprite;

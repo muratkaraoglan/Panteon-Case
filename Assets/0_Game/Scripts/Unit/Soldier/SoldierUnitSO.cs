@@ -11,7 +11,7 @@ public class SoldierUnitSO : ArmyUnitSO
     public override GameObject Create()
     {
         SoldierUnit unit = Instantiate(_soldierUnitPrefab);
-        unit.Init(Name, Sprite, Dimension, HP);
+        unit.Init(Name, Sprite, Dimension, HP, Info());
         unit.SetDamage(_soldierDamage);
         unit.SetAttackRange(_attackRange);
         unit.SetFireRate(_fireRate);
@@ -24,6 +24,8 @@ public class SoldierUnitSO : ArmyUnitSO
         stringBuilder.Append("Name: ").AppendLine(Name);
         stringBuilder.Append("Dimension: ").Append(Dimension.x).Append("x").AppendLine(Dimension.y.ToString());
         stringBuilder.Append("Max HP: ").AppendLine(HP.ToString());
+        stringBuilder.Append("Damage: ").AppendLine(_soldierDamage.ToString());
+        stringBuilder.Append("Attack Range: ").AppendLine(_attackRange.ToString());
         return stringBuilder.ToString();
     }
 }

@@ -9,7 +9,7 @@ public class BarrackUnitSO : BuildingUnitSO
     public override GameObject Create()
     {
         BarrackUnit unit = Instantiate(_barrackUnit);
-        unit.Init(Name, Sprite, Dimension, HP);
+        unit.Init(Name, Sprite, Dimension, HP, Info());
         unit.SetArmyFactory(_armyFactory);
         return unit.gameObject;
     }
@@ -18,7 +18,7 @@ public class BarrackUnitSO : BuildingUnitSO
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append("Name: ").AppendLine(Name);
-        stringBuilder.Append("Dimension: ").Append(Dimension.x).Append("x").Append(Dimension.y);
+        stringBuilder.Append("Dimension: ").Append(Dimension.x).Append("x").AppendLine(Dimension.y.ToString());
         stringBuilder.Append("Max HP: ").AppendLine(HP.ToString());
         return stringBuilder.ToString();
     }

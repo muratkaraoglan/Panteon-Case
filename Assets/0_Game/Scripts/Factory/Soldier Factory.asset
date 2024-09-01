@@ -15,5 +15,22 @@ MonoBehaviour:
   _soldierUnits:
   - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
   - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
+  - {fileID: 11400000, guid: 29e087f067ce9524c9ff91843d4db07e, type: 2}
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
+  - {fileID: 11400000, guid: 29e087f067ce9524c9ff91843d4db07e, type: 2}
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
+  - {fileID: 11400000, guid: 29e087f067ce9524c9ff91843d4db07e, type: 2}
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
+  - {fileID: 11400000, guid: 29e087f067ce9524c9ff91843d4db07e, type: 2}
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
+  - {fileID: 11400000, guid: 29e087f067ce9524c9ff91843d4db07e, type: 2}
+  - {fileID: 11400000, guid: 8e5d108040bb2fc40b21f88e02b43c0c, type: 2}
+  - {fileID: 11400000, guid: c229187838ca3004e95c902a2c27b3be, type: 2}
   - {fileID: 11400000, guid: 29e087f067ce9524c9ff91843d4db07e, type: 2}
   _scanDeep: 2

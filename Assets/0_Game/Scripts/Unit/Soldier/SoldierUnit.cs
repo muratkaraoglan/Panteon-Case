@@ -30,7 +30,7 @@ public class SoldierUnit : Unit, IPointerDownHandler, ITargetable
         _isPlaced = true;
 
         _headerData.UnitSprite = _sprite;
-        _headerData.UnitInfo = _name;
+        _headerData.UnitInfo = _info;
 
         GridManager.Instance.FillEmptyPoints(_tilePoints, transform);
     }

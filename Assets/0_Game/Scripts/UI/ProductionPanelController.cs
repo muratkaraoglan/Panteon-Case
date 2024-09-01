@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ProductionMenuController : MonoBehaviour
+public class ProductionPanelController : MonoBehaviour
 {
     [SerializeField] private RectTransform _productionButtonParent;
     [SerializeField] private GameObject _produictionButtonPrefab;
@@ -25,7 +25,6 @@ public class ProductionMenuController : MonoBehaviour
             GameObject button = Instantiate(_produictionButtonPrefab, _productionButtonParent);
             EnableButton(button, _defaultFactory, i);
             _productionButtonPool.Add(button);
-
         }
     }
 
