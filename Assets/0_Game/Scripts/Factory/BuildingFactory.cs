@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-
 
 [CreateAssetMenu(fileName = "Building Factory", menuName = "Factory/Building Factory")]
 public class BuildingFactory : FactoryBase
@@ -38,6 +36,4 @@ public class BuildingFactory : FactoryBase
         MapItemPlacementHelper.Instance.Placable = product.GetComponent<IPlacable>();
 
     }
-
-
 }

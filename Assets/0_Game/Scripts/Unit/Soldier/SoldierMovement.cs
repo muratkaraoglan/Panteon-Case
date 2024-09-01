@@ -34,7 +34,7 @@ public class SoldierMovement : MonoBehaviour
 
             GridManager.Instance.EmptyFilledPoints(unit.AreaTilePoints);
             transform.position = nextNode.Coords.Position;
-            GridManager.Instance.FillEmptyPoints(unit.AreaTilePoints);
+            GridManager.Instance.FillEmptyPoints(unit.AreaTilePoints, transform);
 
             yield return Extension.GetWaitForSeconds(_movementTimePerTile);
         }

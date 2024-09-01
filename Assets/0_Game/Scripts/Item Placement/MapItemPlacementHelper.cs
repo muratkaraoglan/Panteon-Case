@@ -6,26 +6,26 @@ public class MapItemPlacementHelper : Singleton<MapItemPlacementHelper>
 {
     public IPlacable Placable;
 
+    Plane plane = new Plane(Vector3.forward, Vector3.zero);
     private void Update()
     {
         if (Placable is null) return;
-
-        Plane plane = new Plane(Vector3.forward, Vector3.zero);
 
         Ray ray = CameraController.Instance.MainCamera.ScreenPointToRay(Input.mousePosition);
 
         float entry;
         if (plane.Raycast(ray, out entry))
         {
-            var pos = ray.GetPoint(entry);
-            pos.x = (int)pos.x;
-            pos.y = (int)pos.y;
-            pos.z = 0;
+            var pos = ray.GetPoint(entry).ToInt();
+
             Placable.ChangePosition(pos);
         }
+
         bool isValidPlacement = Placable.IsValidPlacement();
+
         Color color = isValidPlacement ? Color.white : Color.red;
         color.a = .5f;
+
         Placable.ChangeAreaBackgroundColor(color);
 
         if (Input.GetMouseButtonDown(0) && isValidPlacement)
@@ -42,13 +42,4 @@ public class MapItemPlacementHelper : Singleton<MapItemPlacementHelper>
         }
     }
 
-}
-
-public interface IPlacable
-{
-    public void ChangePosition(Vector3 position);
-    public void ChangeAreaBackgroundColor(Color color);
-    public bool IsValidPlacement();
-    public void Place();
-    public GameObject GetPlacableObject();
 }

@@ -10,6 +10,7 @@ public abstract class NodeBase : MonoBehaviour
 
     public ICoord Coords;
     [field: SerializeField] public bool IsEmpty { get; set; }
+    [field: SerializeField] public Transform OccupiedTransfrom { get; set; }
     public virtual void Init(bool isEmpty, ICoord coord)
     {
         IsEmpty = isEmpty;
@@ -31,7 +32,6 @@ public abstract class NodeBase : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-
                 NodeBase node = GridManager.Instance.GetTileAtPosition(new Vector3((int)Coords.Position.x + x, (int)Coords.Position.y + y, 0));
                 if (node == null || !node.IsEmpty)
                 {

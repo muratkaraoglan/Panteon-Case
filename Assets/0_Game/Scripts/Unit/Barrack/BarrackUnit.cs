@@ -51,7 +51,8 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
     {
         _backgroundSpriteRenderer.enabled = false;
         _isPlaced = true;
-        GridManager.Instance.FillEmptyPoints(_tilePoints);
+
+        GridManager.Instance.FillEmptyPoints(_tilePoints, transform);
 
         MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = gameObject;
         _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);
@@ -85,6 +86,6 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
 
     public void TakeDamage(int damage)
     {
-       _health.TakeDamage(damage);
+        _health.TakeDamage(damage);
     }
 }

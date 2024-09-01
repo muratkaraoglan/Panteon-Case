@@ -294,4 +294,11 @@ public static class Extension
         return 1 - Mathf.Exp(-lambda * dt);
     }
 
+    public static Vector3 ToInt(this Vector3 worldPoint)
+    {
+        worldPoint.x = (int)worldPoint.x;
+        worldPoint.y = (int)worldPoint.y;
+        worldPoint.z = (int)worldPoint.z;
+        return worldPoint;
+    }
 }

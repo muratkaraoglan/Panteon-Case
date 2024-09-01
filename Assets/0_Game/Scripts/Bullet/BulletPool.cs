@@ -14,7 +14,7 @@ public class BulletPool : Singleton<BulletPool>
     {
         Bullet bullet;
 
-        if (_bulletPool.Count == 0) bullet = Instantiate(_bulletPrefab);
+        if (_bulletPool.Count == 0) bullet = Instantiate(_bulletPrefab, transform);
         else
         {
             bullet = _bulletPool[0];

@@ -10,66 +10,72 @@ public class SoldierAttack : MonoBehaviour
 
     public void CheckForAttack(Vector3 entryWorldPoint, ITargetable myTargetable, SoldierUnit mySoldierUnit, SoldierMovement mySoldierMovement)
     {
-        print("Entry point: " + entryWorldPoint);
+        StopOnGoingAttack();
 
+        Transform targetRoot = GridManager.Instance.GetTileAtPosition(entryWorldPoint).OccupiedTransfrom;
+
+        if (targetRoot == null) return;
+
+        if (!targetRoot.TryGetComponent(out ITargetable selectedTargatable)) return;
+
+        if (IsAlly(selectedTargatable, myTargetable)) return;//Check if it's an ally
+
+        if (selectedTargatable.IsInAttackRange(transform.position, mySoldierUnit.AttackRange, out Vector3 targetTilePosition))
+        {
+            _attackCoroutine = StartCoroutine(Attack(mySoldierUnit, selectedTargatable));
+            return;
+        }
+
+        MoveTowardsAttackablePosition(mySoldierUnit, mySoldierMovement, targetRoot, selectedTargatable);
+    }
+
+    private void StopOnGoingAttack()
+    {
         if (_attackCoroutine != null)
         {
             StopCoroutine(_attackCoroutine);
             _attackCoroutine = null;
         }
+    }
 
-         RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(entryWorldPoint.x, entryWorldPoint.y), Vector2.right);
+    private bool IsAlly(ITargetable selectedTargetable, ITargetable myTargetable)
+    {
+        return selectedTargetable.UnitID == myTargetable.UnitID;
+    }
 
+    private void MoveTowardsAttackablePosition(SoldierUnit mySoldierUnit, SoldierMovement mySoldierMovement, Transform targetRoot, ITargetable selectedTargatable)
+    {
+        Unit unit = targetRoot.GetComponent<Unit>();
 
-        print("Target name: " + raycastHit.collider.transform.root.name);
-        if (raycastHit.collider != null && raycastHit.collider.transform.root.TryGetComponent(out ITargetable selectedTargatable))
+        Vector3 selectedNodeParentPosition = unit.transform.position.ToInt();
+
+        List<NodeBase> fitAreas = Pathfinding.FindAttackableAreas(
+            selectedNodeParentPosition,
+            (int)unit.Dimension.x,
+            (int)unit.Dimension.y,
+            (int)mySoldierUnit.Dimension.x,
+            (int)mySoldierUnit.Dimension.y,
+            mySoldierUnit.AttackRange, selectedTargatable);
+
+        if (fitAreas.Count == 0) return;
+
+        Vector3 myPosition = transform.position.ToInt();
+
+        NodeBase myNode = GridManager.Instance.GetTileAtPosition(myPosition);
+
+        fitAreas.Sort((a, b) => (a.Coords.Position - myNode.Coords.Position).sqrMagnitude.CompareTo((b.Coords.Position - myNode.Coords.Position).sqrMagnitude));
+
+        for (int i = 0; i < fitAreas.Count; i++)
         {
-            if (selectedTargatable.UnitID == myTargetable.UnitID) return;//Check if it's an ally
-
-            print("Check For Inrane");
-            if (selectedTargatable.IsInAttackRange(transform.position, mySoldierUnit.AttackRange, out Vector3 targetTilePosition))// 
+            List<NodeBase> path = Pathfinding.FindPath(myNode, fitAreas[i]);
+            ;
+            if (path != null && path.Count > 0)
             {
-                print("Inrange Attack");
-                _attackCoroutine = StartCoroutine(Attack(mySoldierUnit, selectedTargatable));
-                return;
-            }
-
-            Unit unit = raycastHit.collider.transform.root.GetComponent<Unit>();
-            Vector3 selectedNodeParentPosition = unit.transform.position;
-
-            selectedNodeParentPosition.x = (int)selectedNodeParentPosition.x;
-            selectedNodeParentPosition.y = (int)selectedNodeParentPosition.y;
-            selectedNodeParentPosition.z = (int)selectedNodeParentPosition.z;
-
-            List<NodeBase> fitAreas = Pathfinding.FindAttackableAreas(
-                selectedNodeParentPosition,
-                (int)unit.Dimension.x,
-                (int)unit.Dimension.y,
-                (int)mySoldierUnit.Dimension.x,
-                (int)mySoldierUnit.Dimension.y,
-                mySoldierUnit.AttackRange, selectedTargatable);
-
-            if (fitAreas.Count == 0) return;
-
-            Vector3 myPosition = transform.position;
-
-            NodeBase myNode = GridManager.Instance.GetTileAtPosition(new Vector3((int)myPosition.x, (int)myPosition.y, 0));
-
-            fitAreas.Sort((a, b) => (a.Coords.Position - myNode.Coords.Position).sqrMagnitude.CompareTo((b.Coords.Position - myNode.Coords.Position).sqrMagnitude));
-
-            for (int i = 0; i < fitAreas.Count; i++)
-            {
-                List<NodeBase> path = Pathfinding.FindPath(myNode, fitAreas[i]);
-                ;
-                if (path != null && path.Count > 0)
+                mySoldierMovement.StartMovement(path, fitAreas[i], mySoldierUnit, () =>
                 {
-                    mySoldierMovement.StartMovement(path, fitAreas[i], mySoldierUnit, () =>
-                    {
-                        _attackCoroutine = StartCoroutine(Attack(mySoldierUnit, selectedTargatable));
-                    });
-                    break;
-                }
-
+                    _attackCoroutine = StartCoroutine(Attack(mySoldierUnit, selectedTargatable));
+                });
+                break;
             }
         }
     }

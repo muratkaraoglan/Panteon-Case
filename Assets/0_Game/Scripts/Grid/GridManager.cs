@@ -12,18 +12,22 @@ public class GridManager : Singleton<GridManager>
     protected override void Awake()
     {
         base.Awake();
+
         Tiles = _scriptableGrid.GenerateGrid();
+
         foreach (var tile in Tiles.Values) tile.CacheNeighbors();
+
         GameObject map = Instantiate(_mapPrefab);
         SpriteRenderer mapSprite = map.GetComponent<SpriteRenderer>();
         mapSprite.size = new Vector2(_scriptableGrid.Width, _scriptableGrid.Height);
+
         _mapCollider = map.GetComponent<BoxCollider2D>();
         _mapCollider.size = new Vector2(_scriptableGrid.Width, _scriptableGrid.Height);
         _mapCollider.offset = new Vector2(_scriptableGrid.Width / 2, _scriptableGrid.Height / 2);
 
         Vector3 mapPosition = map.transform.position;//I changed its position in the forward direction because sometimes it detects the map when it should be detecting units while casting a ray.
         mapPosition.z++;
-        map.transform.position= mapPosition;
+        map.transform.position = mapPosition;
     }
 
     public BoxCollider2D MapCollider => _mapCollider;
@@ -35,11 +39,10 @@ public class GridManager : Singleton<GridManager>
         int validPointCount = 0;
         for (int i = 0; i < points.Count; i++)
         {
-            var point = points[i].position;
-            point.x = (int)point.x;
-            point.y = (int)point.y;
-            point.z = 0;
+            var point = points[i].position.ToInt();
+
             var node = GetTileAtPosition(point);
+
             if (node == null) continue;
             if (!node.IsEmpty) continue;
             validPointCount++;
@@ -51,15 +54,14 @@ public class GridManager : Singleton<GridManager>
     /// Changing the state of the points occupied by the object placed on the map to full
     /// </summary>
     /// <param name="points"></param>
-    public void FillEmptyPoints(List<Transform> points)
+    public void FillEmptyPoints(List<Transform> points, Transform root)
     {
         for (int i = 0; i < points.Count; i++)
         {
-            var point = points[i].position;
-            point.x = (int)point.x;
-            point.y = (int)point.y;
-            point.z = 0;
+            var point = points[i].position.ToInt();
+
             var node = GetTileAtPosition(point);
+            node.OccupiedTransfrom = root;
             node.IsEmpty = false;
         }
     }
@@ -71,10 +73,8 @@ public class GridManager : Singleton<GridManager>
     {
         for (int i = 0; i < points.Count; i++)
         {
-            var point = points[i].position;
-            point.x = (int)point.x;
-            point.y = (int)point.y;
-            point.z = 0;
+            var point = points[i].position.ToInt();
+       
             var node = GetTileAtPosition(point);
             node.IsEmpty = true;
         }

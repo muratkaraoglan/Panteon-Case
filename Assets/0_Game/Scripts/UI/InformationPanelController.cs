@@ -39,55 +39,82 @@ public class InformationPanelController : MonoBehaviour
 
         if (infoPanelDataList.Count == 0)
         {
-            bool _isPanelFullClose = Mathf.Approximately(_myRectTransform.anchoredPosition.x, _panelClosingTargetX);
-
-            if (!_isPanelFullClose)
-            {
-                if (_movementCoroutine != null)
-                    StopCoroutine(_movementCoroutine);
-                _movementCoroutine = StartCoroutine(MovementAnimation(false));
-            }
+            ClosePanelIfOpen();
         }
         else
         {
-            InfoPanelData unitData = infoPanelDataList[0];// first data always be header(unit) data
-            _unitImage.sprite = unitData.UnitSprite;
-            _unitNameText.text = unitData.UnitInfo;
+            UpdateHeaderInfo(infoPanelDataList[0]);
 
-            int dataCount = infoPanelDataList.Count;
-            dataCount--;
+            int productionDataCount = infoPanelDataList.Count - 1;
 
-            if (dataCount > 0)//if unit has production data
+            if (productionDataCount > 0)//if unit has production data
             {
-                int difference = _infoProductionUnitPool.Count - dataCount;// calculate pool difference
+                UpdatePool(productionDataCount);
 
-                if (difference < 0)
-                {
-                    difference *= -1;
-
-                    for (int i = 0; i < difference; i++)
-                    {
-                        InfoProductionUnitController infoPUC = Instantiate(_infoProductionUnitPrefab, _infoProductionUnitParent);
-                        _infoProductionUnitPool.Add(infoPUC);
-                    }
-                }
-
-                for (int i = 1; i < infoPanelDataList.Count; i++)
-                {
-                    InfoProductionUnitController infoPUC = _infoProductionUnitPool[i - 1];
-                    infoPUC.InfoProductionImage.sprite = infoPanelDataList[i].UnitSprite;
-                    infoPUC.InfoText.text = infoPanelDataList[i].UnitInfo;
-                    infoPUC.gameObject.SetEnable();
-                }
+                UpdateProductionUnits(infoPanelDataList);
             }
 
-            bool _isPanelFullOpen = Mathf.Approximately(_myRectTransform.anchoredPosition.x, 0f);
-            if (!_isPanelFullOpen)
-            {
-                if (_movementCoroutine != null)
-                    StopCoroutine(_movementCoroutine);
-                _movementCoroutine = StartCoroutine(MovementAnimation(true));
-            }
+            OpenPanelIfClosed();
+        }
+    }
+
+    private void ClosePanelIfOpen()
+    {
+        bool isPanelFullyClosed = Mathf.Approximately(_myRectTransform.anchoredPosition.x, _panelClosingTargetX);
+
+        if (!isPanelFullyClosed)
+        {
+            StopOngoingMovement();
+            _movementCoroutine = StartCoroutine(MovementAnimation(false));
+        }
+    }
+
+    private void StopOngoingMovement()
+    {
+        if (_movementCoroutine != null)
+        {
+            StopCoroutine(_movementCoroutine);
+            _movementCoroutine = null;
+        }
+    }
+
+    private void UpdateHeaderInfo(InfoPanelData unitData)
+    {
+        _unitImage.sprite = unitData.UnitSprite;
+        _unitNameText.text = unitData.UnitInfo;
+    }
+
+    private void UpdatePool(int requiredCount)
+    {
+        int currentCount = _infoProductionUnitPool.Count;
+        int unitsToAdd = requiredCount - currentCount;
+
+        for (int i = 0; i < unitsToAdd; i++)
+        {
+            InfoProductionUnitController newUnit = Instantiate(_infoProductionUnitPrefab, _infoProductionUnitParent);
+            _infoProductionUnitPool.Add(newUnit);
+        }
+    }
+
+    private void UpdateProductionUnits(List<InfoPanelData> productionDataList)
+    {
+        for (int i = 1; i < productionDataList.Count; i++)
+        {
+            InfoProductionUnitController infoPUC = _infoProductionUnitPool[i - 1];
+            infoPUC.InfoProductionImage.sprite = productionDataList[i].UnitSprite;
+            infoPUC.InfoText.text = productionDataList[i].UnitInfo;
+            infoPUC.gameObject.SetEnable();
+        }
+    }
+
+    private void OpenPanelIfClosed()
+    {
+        bool isPanelFullyOpen = Mathf.Approximately(_myRectTransform.anchoredPosition.x, 0f);
+
+        if (!isPanelFullyOpen)
+        {
+            StopOngoingMovement();
+            _movementCoroutine = StartCoroutine(MovementAnimation(true));
         }
     }
 

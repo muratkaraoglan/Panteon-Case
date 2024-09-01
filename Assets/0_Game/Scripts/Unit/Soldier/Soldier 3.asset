@@ -18,5 +18,5 @@ MonoBehaviour:
   <HP>k__BackingField: 10
   _soldierUnitPrefab: {fileID: 2624858802632166958, guid: fea9c6ef65bf7ac459b2bfae0c37d3f7, type: 3}
   _soldierDamage: 2
-  _attackRange: 3
+  _attackRange: 4
   _fireRate: 1

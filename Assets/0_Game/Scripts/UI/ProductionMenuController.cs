@@ -55,45 +55,74 @@ public class ProductionMenuController : MonoBehaviour
 
         if (newFactory == null)
         {
-            bool _isPanelFullClose = Mathf.Approximately(_myRectTransform.anchoredPosition.x, _panelClosingTargetX);
-            if (!_isPanelFullClose)
-            {
-                if (_movementCoroutine != null)
-                    StopCoroutine(_movementCoroutine);
-                _movementCoroutine = StartCoroutine(MovementAnimation(false));
-            }
+           ClosePanelIfOpen();
             return;
         }
 
-        FactoryBase factoryBase = newFactory;
+        UpdateButtonPool(newFactory.FactoryUnitCount);
 
-        int difference = _productionButtonPool.Count - factoryBase.FactoryUnitCount;
+        UpdateButtons(newFactory);
 
-        if (difference < 0)
+        OpenPanelIfClosed();
+    }
+
+    private void ClosePanelIfOpen()
+    {
+        if (!IsPanelFullyClosed())
         {
-            difference *= -1;
-            for (int i = 0; i < difference; i++)
-            {
-                GameObject button = Instantiate(_produictionButtonPrefab, _productionButtonParent);
-                _productionButtonPool.Add(button);
-            }
+            StopOngoingMovement();
+            _movementCoroutine = StartCoroutine(MovementAnimation(false));
         }
+    }
 
+    private void OpenPanelIfClosed()
+    {
+        if (!IsPanelFullyOpen())
+        {
+            StopOngoingMovement();
+            _movementCoroutine = StartCoroutine(MovementAnimation(true));
+        }
+    }
+
+    private bool IsPanelFullyClosed()
+    {
+        return Mathf.Approximately(_myRectTransform.anchoredPosition.x, _panelClosingTargetX);
+    }
+
+    private bool IsPanelFullyOpen()
+    {
+        return Mathf.Approximately(_myRectTransform.anchoredPosition.x, 0f);
+    }
+
+    private void StopOngoingMovement()
+    {
+        if (_movementCoroutine != null)
+        {
+            StopCoroutine(_movementCoroutine);
+            _movementCoroutine = null;
+        }
+    }
+
+    private void UpdateButtonPool(int requiredButtonCount)
+    {
+        int currentButtonCount = _productionButtonPool.Count;
+        int buttonsToAdd = requiredButtonCount - currentButtonCount;
+
+        for (int i = 0; i < buttonsToAdd; i++)
+        {
+            GameObject button = Instantiate(_produictionButtonPrefab, _productionButtonParent);
+            _productionButtonPool.Add(button);
+        }
+    }
+
+    private void UpdateButtons(FactoryBase factoryBase)
+    {
         for (int i = 0; i < factoryBase.FactoryUnitCount; i++)
         {
             GameObject button = _productionButtonPool[i];
             EnableButton(button, factoryBase, i);
         }
-
-        bool _isPanelFullOpen = Mathf.Approximately(_myRectTransform.anchoredPosition.x, 0f);
-        if (!_isPanelFullOpen)
-        {
-            if (_movementCoroutine != null)
-                StopCoroutine(_movementCoroutine);
-            _movementCoroutine = StartCoroutine(MovementAnimation(true));
-        }
     }
-
 
     IEnumerator MovementAnimation(bool openState)
     {

@@ -8,7 +8,6 @@ public class HealthBarController : MonoBehaviour
     [SerializeField] private Image _filledImage;
     [SerializeField] private GameObject _healthBarParentGameObject;
 
-
     public void ChangeHealthBarFillAmount(HealthChangeEventData? data)
     {
         if (data.HasValue)

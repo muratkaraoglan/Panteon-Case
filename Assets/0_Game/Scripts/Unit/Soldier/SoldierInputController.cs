@@ -29,10 +29,7 @@ public class SoldierInputController : MonoBehaviour
 
             if (!_groundPlane.Raycast(ray, out float entry)) return;
 
-            Vector3 entryWorldPoint = ray.GetPoint(entry);
-            entryWorldPoint.x = (int)entryWorldPoint.x;
-            entryWorldPoint.y = (int)entryWorldPoint.y;
-            entryWorldPoint.z = (int)entryWorldPoint.z;
+            Vector3 entryWorldPoint = ray.GetPoint(entry).ToInt();
 
             NodeBase selectedNode = GridManager.Instance.GetTileAtPosition(entryWorldPoint);
 
@@ -42,7 +39,7 @@ public class SoldierInputController : MonoBehaviour
             {
                 if (selectedNode.IsAreaEmpty((int)_mySoldierUnit.Dimension.x, (int)_mySoldierUnit.Dimension.y))// Is the selected field suitable for my field?
                 {
-                    var path = Pathfinding.FindPath(GridManager.Instance.GetTileAtPosition(new Vector3((int)transform.position.x, (int)transform.position.y, 0)), selectedNode);
+                    var path = Pathfinding.FindPath(GridManager.Instance.GetTileAtPosition(transform.position.ToInt()), selectedNode);
 
                     if (path == null) return;
 
@@ -55,6 +52,5 @@ public class SoldierInputController : MonoBehaviour
                 _soldierAttack.CheckForAttack(entryWorldPoint, _myTargetable, _mySoldierUnit, _mySoldierMovement);
             }
         }
-
     }
 }

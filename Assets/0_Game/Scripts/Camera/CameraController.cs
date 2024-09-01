@@ -14,7 +14,7 @@ public class CameraController : Singleton<CameraController>
     private Vector3 _dragStartPosition;
     private Vector3 _dragCurrentPosition;
     #endregion
-
+    Plane _plane = new Plane(Vector3.forward, Vector3.zero);
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -44,13 +44,11 @@ public class CameraController : Singleton<CameraController>
     private void HandleMouseInput()
     {
         if (Input.GetMouseButtonDown(0))
-        {
-            Plane plane = new Plane(Vector3.forward, Vector3.zero);
-
+        { 
             Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
             float entry;
-            if (plane.Raycast(ray, out entry))
+            if (_plane.Raycast(ray, out entry))
             {
                 _dragStartPosition = ray.GetPoint(entry);
             }
@@ -58,15 +56,12 @@ public class CameraController : Singleton<CameraController>
 
         if (Input.GetMouseButton(0))
         {
-            Plane plane = new Plane(Vector3.forward, Vector3.zero);
-
             Ray ray = MainCamera.ScreenPointToRay(Input.mousePosition);
 
             float entry;
-            if (plane.Raycast(ray, out entry))
+            if (_plane.Raycast(ray, out entry))
             {
                 _dragCurrentPosition = ray.GetPoint(entry);
-
                 _newPosition = transform.position + _dragStartPosition - _dragCurrentPosition;
             }
         }

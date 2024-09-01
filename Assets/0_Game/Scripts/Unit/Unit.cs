@@ -15,15 +15,12 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected Health _health;
     [SerializeField] private TextMeshProUGUI _iDText;
  
-
-
     protected string _name;
     protected Sprite _sprite;
     protected Vector2 _dimension;
     protected List<Transform> _tilePoints;
     protected bool _isPlaced;
     protected int _unitID;
-
 
     private void OnEnable()
     {

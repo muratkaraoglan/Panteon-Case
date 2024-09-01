@@ -35,7 +35,7 @@ public class PowerPlantUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
     {
         _backgroundSpriteRenderer.enabled = false;
         _isPlaced = true;
-        GridManager.Instance.FillEmptyPoints(_tilePoints);
+        GridManager.Instance.FillEmptyPoints(_tilePoints, transform);
 
         _headerData.UnitSprite = _sprite;
         _headerData.UnitInfo = _name;

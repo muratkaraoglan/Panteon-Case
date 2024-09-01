@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class SoldierUnit : Unit, IPointerDownHandler, ITargetable
-{   
+{
     [field: SerializeField] public Transform BulletSpawnPoint { get; private set; }
     [field: SerializeField] public Transform BodyTransform { get; private set; }
 
@@ -32,7 +32,7 @@ public class SoldierUnit : Unit, IPointerDownHandler, ITargetable
         _headerData.UnitSprite = _sprite;
         _headerData.UnitInfo = _name;
 
-        GridManager.Instance.FillEmptyPoints(_tilePoints);
+        GridManager.Instance.FillEmptyPoints(_tilePoints, transform);
     }
 
     public void OnPointerDown(PointerEventData eventData)

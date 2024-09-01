@@ -18,10 +18,8 @@ public class SoldierFactory : FactoryBase
     public override void ProvideUnit(UnitBaseSO unit, GameObject selectedGameObject = null)
     {
         GameObject product;
-        Vector3 pos = selectedGameObject.transform.position;
-        pos.x = (int)pos.x;
-        pos.y = (int)pos.y;
-        pos.z = (int)pos.z;
+
+        Vector3 pos = selectedGameObject.transform.position.ToInt();
 
         Vector3 productionUnitDimension = selectedGameObject.GetComponent<BarrackUnit>().Dimension;
 
