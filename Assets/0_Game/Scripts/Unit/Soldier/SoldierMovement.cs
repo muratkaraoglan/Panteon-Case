@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class SoldierMovement : MonoBehaviour
 {
     [SerializeField] private float _movementTimePerTile;
+    [SerializeField] private Transform _bodyTransform;
     private Coroutine _movementCoroutine;
 
     public void StartMovement(List<NodeBase> path, NodeBase targetNode, SoldierUnit unit, Action onMovementComplete = null)
@@ -28,6 +28,10 @@ public class SoldierMovement : MonoBehaviour
             }
             path.RemoveAt(0);
 
+            Vector3 dir = (nextNode.Coords.Position - transform.position).normalized;
+
+            _bodyTransform.localRotation = Quaternion.Euler(DirToEulerAngle(dir));
+
             GridManager.Instance.EmptyFilledPoints(unit.AreaTilePoints);
             transform.position = nextNode.Coords.Position;
             GridManager.Instance.FillEmptyPoints(unit.AreaTilePoints);
@@ -37,4 +41,24 @@ public class SoldierMovement : MonoBehaviour
         _movementCoroutine = null;
         onMovementComplete?.Invoke();
     }
+
+    public Vector3 DirToEulerAngle(Vector3 direction)
+    {
+        direction = direction.normalized;
+
+        switch (direction)
+        {
+            case Vector3 v when v == Vector3.up:
+                return Vector3.zero;
+            case Vector3 v when v == Vector3.down:
+                return new Vector3(0, 0, 180);
+            case Vector3 v when v == Vector3.right:
+                return new Vector3(0, 0, -90);
+            case Vector3 v when v == Vector3.left:
+                return new Vector3(0, 0, 90);
+            default:
+                throw new System.ArgumentException("Direction vector is not valid");
+        }
+    }
+
 }

@@ -12,7 +12,8 @@ public class SoldierAttack : MonoBehaviour
         if (raycastHit.collider != null && raycastHit.collider.transform.root.TryGetComponent(out ITargetable selectedTargatable))
         {
             if (selectedTargatable.UnitID == myTargetable.UnitID) return;//Check if it's an ally
-            if ((entryWorldPoint - mySoldierUnit.transform.position).sqrMagnitude <= mySoldierUnit.AttackRange * mySoldierUnit.AttackRange)
+
+            if (selectedTargatable.IsInAttackRange(transform.position, mySoldierUnit.AttackRange))// 
             {
                 print("Inrange Attack");
                 return;
@@ -31,7 +32,7 @@ public class SoldierAttack : MonoBehaviour
                 (int)unit.Dimension.y,
                 (int)mySoldierUnit.Dimension.x,
                 (int)mySoldierUnit.Dimension.y,
-                mySoldierUnit.AttackRange);
+                mySoldierUnit.AttackRange, selectedTargatable);
 
             if (fitAreas.Count == 0) return;
 

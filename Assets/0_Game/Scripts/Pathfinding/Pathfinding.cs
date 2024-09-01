@@ -105,15 +105,24 @@ public static class Pathfinding
         }
         return null;
 
-        static bool CheckAreaFit(Vector3 nodePosition, int requiredWidth, int requiredHeight, out NodeBase nodeBase)
-        {
-            NodeBase current = GridManager.Instance.GetTileAtPosition(nodePosition);
-            nodeBase = current;
-            if (current == null) return false;
+        
+    }
+    /// <summary>
+    /// Check unit dimension fit on point
+    /// </summary>
+    /// <param name="nodePosition"></param>
+    /// <param name="requiredWidth"></param>
+    /// <param name="requiredHeight"></param>
+    /// <param name="nodeBase"></param>
+    /// <returns></returns>
+    static bool CheckAreaFit(Vector3 nodePosition, int requiredWidth, int requiredHeight, out NodeBase nodeBase)
+    {
+        nodeBase = GridManager.Instance.GetTileAtPosition(nodePosition);
 
-            if (current.IsAreaEmpty(requiredWidth, requiredHeight)) return true;
-            return false;
-        }
+        if (nodeBase == null) return false;
+
+        if (nodeBase.IsAreaEmpty(requiredWidth, requiredHeight)) return true;
+        return false;
     }
 
     /// <summary>
@@ -127,9 +136,7 @@ public static class Pathfinding
     /// <param name="requiredHeight"></param>
     /// <param name="scanDeep"></param>
     /// <returns></returns>
-
-
-    public static List<NodeBase> FindAttackableAreas(Vector3 unitPosition, int areawidth, int areaHeight, int requiredWidth, int requiredHeight, int attackRange)
+    public static List<NodeBase> FindAttackableAreas(Vector3 unitPosition, int areawidth, int areaHeight, int requiredWidth, int requiredHeight, int attackRange, ITargetable target)
     {
         List<NodeBase> fitAreas = new List<NodeBase>();
         Vector3 startPosition = unitPosition - new Vector3(1, 1, 0);
@@ -140,42 +147,41 @@ public static class Pathfinding
         {
             for (int i = (int)startPosition.y; i < (int)startPosition.y + yEdgeLenght; i++)//bottom left to top left
             {
-                CheckAreaAndAttackRange(unitPosition, new Vector3(startPosition.x, i, 0), requiredWidth, requiredHeight, attackRange, fitAreas);
+                CheckAreaAndAttackRange( new Vector3(startPosition.x, i, 0), requiredWidth, requiredHeight, attackRange, fitAreas, target);
             }
 
             for (int j = (int)startPosition.x + 1; j < (int)startPosition.x + xEdgeLenght; j++)//top left to top right
             {
-                CheckAreaAndAttackRange(unitPosition, new Vector3(j, (int)startPosition.y + yEdgeLenght - 1, 0), requiredWidth, requiredHeight, attackRange, fitAreas);
+                CheckAreaAndAttackRange( new Vector3(j, (int)startPosition.y + yEdgeLenght - 1, 0), requiredWidth, requiredHeight, attackRange, fitAreas, target);
             }
 
             for (int k = (int)startPosition.y + yEdgeLenght - 2; k >= (int)startPosition.y; k--)//top right to bottom right
             {
-                CheckAreaAndAttackRange(unitPosition, new Vector3(startPosition.x + xEdgeLenght - 1, k, 0), requiredWidth, requiredHeight, attackRange, fitAreas);
+                CheckAreaAndAttackRange( new Vector3(startPosition.x + xEdgeLenght - 1, k, 0), requiredWidth, requiredHeight, attackRange, fitAreas, target);
             }
 
             for (int l = (int)startPosition.x + xEdgeLenght - 2; l > (int)startPosition.x; l--)//bottom right to bottom left
             {
-                CheckAreaAndAttackRange(unitPosition, new Vector3(l, startPosition.y, 0), requiredWidth, requiredHeight, attackRange, fitAreas);
+                CheckAreaAndAttackRange( new Vector3(l, startPosition.y, 0), requiredWidth, requiredHeight, attackRange, fitAreas, target);
             }
 
             yEdgeLenght += 2;
             xEdgeLenght += 2;
             startPosition -= new Vector3(1, 1, 0);
+         
+        }
+
+        static void CheckAreaAndAttackRange(Vector3 searchingPosition, int requiredWidth, int requiredHeight, int attackRange, List<NodeBase> nodeList, ITargetable target)
+        {
+            if (!CheckAreaFit(searchingPosition, requiredWidth, requiredHeight, out NodeBase nodeBase)) return;
+            if (target.IsInAttackRange(nodeBase.Coords.Position, attackRange)) nodeList.Add(nodeBase);
 
         }
 
         return fitAreas;
-
-        static void CheckAreaAndAttackRange(Vector3 selectedNodePosition, Vector3 searchingPosition, int requiredWidth, int requiredHeight, int attackRange, List<NodeBase> nodeList)
-        {
-            NodeBase current = GridManager.Instance.GetTileAtPosition(searchingPosition);
-            if (current == null) return;
-            //check area fit for attacker and current node is in attack range
-            if (current.IsAreaEmpty(requiredWidth, requiredHeight) && (selectedNodePosition - current.Coords.Position).sqrMagnitude <= attackRange * attackRange) nodeList.Add(current);
-        }
     }
 
-
+   
 
 
 }

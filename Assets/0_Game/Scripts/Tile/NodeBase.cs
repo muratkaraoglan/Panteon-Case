@@ -19,6 +19,12 @@ public abstract class NodeBase : MonoBehaviour
 
     public float GetDistance(NodeBase otherNode) => Coords.GetDistance(otherNode.Coords);
 
+    /// <summary>
+    /// Is the current node suitable for the given target width and height?
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
     public bool IsAreaEmpty(int width, int height)
     {
         for (int x = 0; x < width; x++)

@@ -65,4 +65,16 @@ public class BarrackUnit : Unit, IPlacable, IPointerDownHandler, ITargetable
         _onProductionMenuChangedEvent.RaiseEvent(_armyFactory);
         _onInformationMenuChangedEvent.RaiseEvent(_infoPanelDataList);
     }
+
+    public bool IsInAttackRange(Vector3 position, int range)
+    {
+        int rangeSquare = range * range;
+        for (int i = 0; i < _tilePoints.Count; i++)
+        {
+            if ((position - _tilePoints[i].position).sqrMagnitude <= rangeSquare)
+                return true;
+        }
+
+        return false;
+    }
 }

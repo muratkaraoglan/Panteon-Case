@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementTimePerTile: 0.1
+  _bodyTransform: {fileID: 452403377011368723}
 --- !u!114 &1722555740912912309
 MonoBehaviour:
   m_ObjectHideFlags: 0
