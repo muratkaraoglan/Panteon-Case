@@ -11,5 +11,9 @@ public interface ITargetable
     /// <param name="position"></param>
     /// <param name="range"></param>
     /// <returns></returns>
-    public bool IsInAttackRange(Vector3 position, int range);
+    public bool IsInAttackRange(Vector3 position, int range, out Vector3 targetTilePosition);
+
+    public void TakeDamage(int damage);
+
+    public bool IsAlive { get; }
 }

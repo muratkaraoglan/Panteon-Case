@@ -43,8 +43,9 @@ public class SoldierInputController : MonoBehaviour
                 if (selectedNode.IsAreaEmpty((int)_mySoldierUnit.Dimension.x, (int)_mySoldierUnit.Dimension.y))// Is the selected field suitable for my field?
                 {
                     var path = Pathfinding.FindPath(GridManager.Instance.GetTileAtPosition(new Vector3((int)transform.position.x, (int)transform.position.y, 0)), selectedNode);
+
                     if (path == null) return;
-                    print("Move");
+
                     _mySoldierMovement.StartMovement(path, selectedNode, _mySoldierUnit);
                     return;
                 }

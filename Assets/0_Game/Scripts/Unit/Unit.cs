@@ -4,22 +4,27 @@ using TMPro;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
-{
+{   [Header("Event")]
+    [SerializeField] protected OnProductionMenuChangedEvent _onProductionMenuChangedEvent;
+    [SerializeField] protected OnInformationMenuChangedEvent _onInformationMenuChangedEvent;
+
+    [Header("")]
     [SerializeField] protected SpriteRenderer _bodySpriteRenderer;
     [SerializeField] protected SpriteRenderer _backgroundSpriteRenderer;
     [SerializeField] protected Transform _tilePointsParent;
-    [SerializeField] private Health _health;
+    [SerializeField] protected Health _health;
     [SerializeField] private TextMeshProUGUI _iDText;
-    [Header("Event")]
-    [SerializeField] protected OnProductionMenuChangedEvent _onProductionMenuChangedEvent;
-    [SerializeField] protected OnInformationMenuChangedEvent _onInformationMenuChangedEvent;
+ 
+
 
     protected string _name;
     protected Sprite _sprite;
     protected Vector2 _dimension;
     protected List<Transform> _tilePoints;
     protected bool _isPlaced;
-    [SerializeField] protected int _unitID;
+    protected int _unitID;
+
+
     private void OnEnable()
     {
         _backgroundSpriteRenderer.enabled = true;

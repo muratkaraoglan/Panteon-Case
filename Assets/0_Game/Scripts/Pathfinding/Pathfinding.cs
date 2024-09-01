@@ -174,7 +174,7 @@ public static class Pathfinding
         static void CheckAreaAndAttackRange(Vector3 searchingPosition, int requiredWidth, int requiredHeight, int attackRange, List<NodeBase> nodeList, ITargetable target)
         {
             if (!CheckAreaFit(searchingPosition, requiredWidth, requiredHeight, out NodeBase nodeBase)) return;
-            if (target.IsInAttackRange(nodeBase.Coords.Position, attackRange)) nodeList.Add(nodeBase);
+            if (target.IsInAttackRange(nodeBase.Coords.Position, attackRange, out Vector3 targetTilePosition)) nodeList.Add(nodeBase);
 
         }
 

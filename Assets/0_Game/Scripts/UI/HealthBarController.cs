@@ -11,7 +11,6 @@ public class HealthBarController : MonoBehaviour
 
     public void ChangeHealthBarFillAmount(HealthChangeEventData? data)
     {
-        print(data.HasValue);
         if (data.HasValue)
         {
             _healthBarParentGameObject.SetEnable();

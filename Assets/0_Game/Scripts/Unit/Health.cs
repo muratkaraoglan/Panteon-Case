@@ -33,12 +33,6 @@ public class Health : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    [ContextMenu("Change")]
-    public void Change()
-    {
-        TakeDamage(10);
-    }
-
     public void TakeDamage(int damage)
     {
         _currentHP -= 10;

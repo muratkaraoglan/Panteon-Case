@@ -4,18 +4,33 @@ using UnityEngine;
 
 public class SoldierAttack : MonoBehaviour
 {
+    [SerializeField] private Transform _bodyTransform;
+
+    Coroutine _attackCoroutine;
 
     public void CheckForAttack(Vector3 entryWorldPoint, ITargetable myTargetable, SoldierUnit mySoldierUnit, SoldierMovement mySoldierMovement)
     {
-        RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(entryWorldPoint.x, entryWorldPoint.y), Vector2.right);
+        print("Entry point: " + entryWorldPoint);
 
+        if (_attackCoroutine != null)
+        {
+            StopCoroutine(_attackCoroutine);
+            _attackCoroutine = null;
+        }
+
+         RaycastHit2D raycastHit = Physics2D.Raycast(new Vector2(entryWorldPoint.x, entryWorldPoint.y), Vector2.right);
+
+
+        print("Target name: " + raycastHit.collider.transform.root.name);
         if (raycastHit.collider != null && raycastHit.collider.transform.root.TryGetComponent(out ITargetable selectedTargatable))
         {
             if (selectedTargatable.UnitID == myTargetable.UnitID) return;//Check if it's an ally
 
-            if (selectedTargatable.IsInAttackRange(transform.position, mySoldierUnit.AttackRange))// 
+            print("Check For Inrane");
+            if (selectedTargatable.IsInAttackRange(transform.position, mySoldierUnit.AttackRange, out Vector3 targetTilePosition))// 
             {
                 print("Inrange Attack");
+                _attackCoroutine = StartCoroutine(Attack(mySoldierUnit, selectedTargatable));
                 return;
             }
 
@@ -50,13 +65,30 @@ public class SoldierAttack : MonoBehaviour
                 {
                     mySoldierMovement.StartMovement(path, fitAreas[i], mySoldierUnit, () =>
                     {
-                        print("Attack");
-
+                        _attackCoroutine = StartCoroutine(Attack(mySoldierUnit, selectedTargatable));
                     });
                     break;
                 }
 
             }
         }
+    }
+
+    private IEnumerator Attack(SoldierUnit soldierUnit, ITargetable target)
+    {
+        float fireDelay = 1 / soldierUnit.FireRate;
+
+        while (target.IsAlive && target.IsInAttackRange(transform.position, soldierUnit.AttackRange, out Vector3 targetTilePosition))
+        {
+            Bullet bullet = BulletPool.Instance.ProvideBullet();
+
+            Vector3 dir = (targetTilePosition - transform.position).normalized;
+            soldierUnit.BodyTransform.up = dir;
+
+            bullet.Init(soldierUnit.UnitID, soldierUnit.BulletSpawnPoint.position, soldierUnit.BulletSpawnPoint.up, soldierUnit.Damage);
+
+            yield return Extension.GetWaitForSeconds(fireDelay);
+        }
+        _attackCoroutine = null;
     }
 }
