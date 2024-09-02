@@ -82,13 +82,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa892b7e193cb747ad4d29b0a1ad9f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onProductionMenuChangedEvent: {fileID: 11400000, guid: 45f7e36fd84ad81439296865ab3e89b9, type: 2}
+  _onInformationMenuChangedEvent: {fileID: 11400000, guid: a6c07cb66bec55d4692665599a7bbde6, type: 2}
   _bodySpriteRenderer: {fileID: 452403377011368722}
   _backgroundSpriteRenderer: {fileID: 452403375866258225}
   _tilePointsParent: {fileID: 452403375093278599}
   _health: {fileID: 2624858802632166961}
   _iDText: {fileID: 755410686911398481}
-  _onProductionMenuChangedEvent: {fileID: 11400000, guid: 45f7e36fd84ad81439296865ab3e89b9, type: 2}
-  _onInformationMenuChangedEvent: {fileID: 11400000, guid: a6c07cb66bec55d4692665599a7bbde6, type: 2}
   <BulletSpawnPoint>k__BackingField: {fileID: 2622343178200427081}
   <BodyTransform>k__BackingField: {fileID: 452403377011368723}
 --- !u!114 &2624858802632166961
@@ -380,6 +380,10 @@ PrefabInstance:
     - target: {fileID: 7837892847198511694, guid: 6e3e5643e3b73c94c94963e343fd8e8e, type: 3}
       propertyPath: m_Name
       value: Unit ID Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837892847198511694, guid: 6e3e5643e3b73c94c94963e343fd8e8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9063475757192414271, guid: 6e3e5643e3b73c94c94963e343fd8e8e, type: 3}
       propertyPath: m_Pivot.x
