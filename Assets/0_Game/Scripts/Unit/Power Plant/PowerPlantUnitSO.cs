@@ -6,11 +6,11 @@ using UnityEngine;
 public class PowerPlantUnitSO : BuildingUnitSO
 {
     [SerializeField] private PowerPlantUnit _powerPlantUnit;
-    public override GameObject Create()
+    public override IUnit Create()
     {
         PowerPlantUnit unit = Instantiate(_powerPlantUnit);
-        unit.Init(Name, Sprite, Dimension, HP, Info());
-        return unit.gameObject;
+        unit.Initialize(Name, Sprite, Dimension, HP, Info());
+        return unit;
     }
 
     public override string Info()

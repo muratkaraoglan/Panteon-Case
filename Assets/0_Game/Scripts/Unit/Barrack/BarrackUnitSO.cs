@@ -6,12 +6,12 @@ public class BarrackUnitSO : BuildingUnitSO
 {
     [SerializeField] private BarrackUnit _barrackUnit;
     [SerializeField] private SoldierFactory _armyFactory;
-    public override GameObject Create()
+    public override IUnit Create()
     {
         BarrackUnit unit = Instantiate(_barrackUnit);
-        unit.Init(Name, Sprite, Dimension, HP, Info());
+        unit.Initialize(Name, Sprite, Dimension, HP, Info());
         unit.SetArmyFactory(_armyFactory);
-        return unit.gameObject;
+        return unit;
     }
 
     public override string Info()

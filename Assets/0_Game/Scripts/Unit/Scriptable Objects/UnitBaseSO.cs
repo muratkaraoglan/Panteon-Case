@@ -10,8 +10,8 @@ public abstract class UnitBaseSO : ScriptableObject
     [field: SerializeField] public Vector2 Dimension { get; protected set; }
     [field: SerializeField] public int HP { get; protected set; }
 
-    public abstract GameObject Create();
+    public abstract IUnit Create();
 
     public abstract string Info();
- 
+
 }

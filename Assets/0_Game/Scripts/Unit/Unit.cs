@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public abstract class Unit : MonoBehaviour
-{   [Header("Event")]
+public abstract class Unit : MonoBehaviour, IUnit
+{
+    [Header("Event")]
     [SerializeField] protected OnProductionMenuChangedEvent _onProductionMenuChangedEvent;
     [SerializeField] protected OnInformationMenuChangedEvent _onInformationMenuChangedEvent;
 
@@ -14,7 +15,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] protected Transform _tilePointsParent;
     [SerializeField] protected Health _health;
     [SerializeField] private TextMeshProUGUI _iDText;
- 
+
     protected string _name;
     protected Sprite _sprite;
     protected Vector2 _dimension;
@@ -22,13 +23,14 @@ public abstract class Unit : MonoBehaviour
     protected bool _isPlaced;
     protected int _unitID;
     protected string _info;
+
     private void OnEnable()
     {
         _backgroundSpriteRenderer.enabled = true;
         _isPlaced = false;
     }
 
-    public virtual void Init(string name, Sprite sprite, Vector2 dimension, int maxHP,string info)
+    public void Initialize(string name, Sprite sprite, Vector2 dimension, int maxHP, string info)
     {
         _tilePoints = new List<Transform>();
         _name = name;
@@ -67,6 +69,9 @@ public abstract class Unit : MonoBehaviour
 
     public Vector2 Dimension => _dimension;
     public List<Transform> AreaTilePoints => _tilePoints;
+
+    public GameObject GameObject => gameObject;
+
     public void SetUnitID(int unitID)
     {
         _unitID = unitID;
@@ -80,7 +85,16 @@ public abstract class Unit : MonoBehaviour
         MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject = null;
         _onProductionMenuChangedEvent.RaiseEvent(null);
         _onInformationMenuChangedEvent.RaiseEvent(new List<InfoPanelData>());
- 
-    }
 
+    }
+}
+
+public interface IUnit
+{
+    public void Initialize(string name, Sprite sprite, Vector2 dimension, int maxHP, string info);
+    public Vector2 Dimension { get; }
+
+    public void SetUnitID(int unitID);
+
+    public GameObject GameObject { get; }
 }

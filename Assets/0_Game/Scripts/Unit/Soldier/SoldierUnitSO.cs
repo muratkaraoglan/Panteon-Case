@@ -8,14 +8,14 @@ public class SoldierUnitSO : ArmyUnitSO
     [SerializeField] private int _soldierDamage;
     [SerializeField] private int _attackRange;
     [SerializeField] private float _fireRate;
-    public override GameObject Create()
+    public override IUnit Create()
     {
         SoldierUnit unit = Instantiate(_soldierUnitPrefab);
-        unit.Init(Name, Sprite, Dimension, HP, Info());
+        unit.Initialize(Name, Sprite, Dimension, HP, Info());
         unit.SetDamage(_soldierDamage);
         unit.SetAttackRange(_attackRange);
         unit.SetFireRate(_fireRate);
-        return unit.gameObject;
+        return unit;
     }
 
     public override string Info()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Soldier Factory", menuName = "Factory/Soldier Factory")]
@@ -17,38 +18,36 @@ public class SoldierFactory : FactoryBase
 
     public override void ProvideUnit(UnitBaseSO unit, GameObject selectedGameObject = null)
     {
-        GameObject product;
-
         Vector3 pos = selectedGameObject.transform.position.ToInt();
 
         Vector3 productionUnitDimension = selectedGameObject.GetComponent<BarrackUnit>().Dimension;
 
         NodeBase nodeBase = Pathfinding.FindTileToSpawn(pos, (int)productionUnitDimension.x, (int)productionUnitDimension.y, (int)unit.Dimension.x, (int)unit.Dimension.y, _scanDeep);
 
-        if (nodeBase != null)
-        {
-            if (_pool.ContainsKey(unit.Name))
-            {
-                product = _pool[unit.Name].Find(g => !g.activeSelf);
-                if (product == null)
-                {
-                    product = unit.Create();
-                    _pool[unit.Name].Add(product);
-                }
-            }
-            else
-            {
-                product = unit.Create();
-                _pool.Add(unit.Name, new List<GameObject> { product });
-            }
-            product.transform.position = nodeBase.Coords.Position;
-            product.SetEnable();
-            SoldierUnit soldier = product.GetComponent<SoldierUnit>();
-            soldier.OnPlace();
-            if (selectedGameObject.TryGetComponent(out ITargetable targatable))
-            {
-                soldier.SetUnitID(targatable.UnitID);
-            }
-        }
+        if (nodeBase == null) return;
+
+        GetOrAddProduct(unit, out IUnit product);
+
+        SoldierPlacementManager.PlaceSoldier(nodeBase, product, selectedGameObject);
+
+    }
+
+
+}
+
+public static class SoldierPlacementManager
+{
+    public static void PlaceSoldier(NodeBase nodeBase, IUnit product, GameObject selectedGameObject)
+    {
+        GameObject productGO = product.GameObject;
+
+        productGO.transform.position = nodeBase.Coords.Position;
+        productGO.SetEnable();
+
+        SoldierUnit soldier = productGO.GetComponent<SoldierUnit>();
+
+        soldier.OnPlace();
+        soldier.SetUnitID(selectedGameObject.GetComponent<ITargetable>().UnitID);
+ 
     }
 }
