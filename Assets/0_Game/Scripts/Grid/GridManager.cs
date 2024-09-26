@@ -77,6 +77,7 @@ public class GridManager : Singleton<GridManager>
             var point = points[i].position.ToInt();
        
             var node = GetTileAtPosition(point);
+            node.OccupiedTransfrom = null;
             node.IsEmpty = true;
         }
     }

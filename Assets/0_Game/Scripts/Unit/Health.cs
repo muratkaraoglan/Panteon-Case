@@ -29,14 +29,12 @@ public class Health : MonoBehaviour, IPointerDownHandler
                 CurrentHealth = _currentHP,
                 MaxHealth = _maxHP
             });
-
         }
     }
 
     public void TakeDamage(int damage)
     {
-        _currentHP -= 10;
-
+        _currentHP -= damage;
 
         if (MapItemSelectionHelper.Instance.LastSelectedMapItemGameObject == gameObject)
         {

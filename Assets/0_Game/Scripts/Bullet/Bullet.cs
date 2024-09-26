@@ -21,29 +21,40 @@ public class Bullet : MonoBehaviour
         StartCoroutine(Move());
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        if (collision.transform.root.TryGetComponent(out ITargetable targetable))
-        {
-            if (targetable.UnitID == _bulletID) return;//ally
-            targetable.TakeDamage(_damage);
-            BulletPool.Instance.PutBackToPool(this);
-            gameObject.SetDisable();
-        }
-    }
-
     IEnumerator Move()
     {
         float elapsedTime = 0;
+        NodeBase previousNode = null;
+
         while (elapsedTime <= _bulletLifeTime)
         {
             var dt = Time.deltaTime;
             elapsedTime += dt;
             transform.Translate(_bulletSpeed * dt * _moveDirection, Space.Self);
+
             yield return null;
+
+            //Collision check
+            Vector3Int currentPos = Vector3Int.RoundToInt(transform.position);
+            if (previousNode == null || previousNode.Coords.Position != currentPos)
+            {
+                previousNode = GridManager.Instance.GetTileAtPosition(currentPos);
+            }
+
+            if (previousNode == null || previousNode.IsEmpty) continue;
+
+            ITargetable targetable = previousNode.OccupiedTransfrom.GetComponent<ITargetable>();
+
+            if (targetable.UnitID == _bulletID) continue;
+
+            targetable.TakeDamage(_damage);
+            break;
         }
-        BulletPool.Instance.PutBackToPool(this);
         gameObject.SetDisable();
+    }
+
+    private void OnDisable()
+    {
+        BulletPool.Instance.PutBackToPool(this);
     }
 }
